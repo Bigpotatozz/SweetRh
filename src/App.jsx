@@ -1,14 +1,21 @@
 import "./App.css";
-
-import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { useEffect, useState } from "react";
-
+import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
+import { AppSidebar } from "./components/ui/AppSidebar";
+import { Outlet } from "react-router";
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">App funcionando</h1>
+      <div className="w-full">
+        <div className="min-h-screen">
+          <SidebarProvider>
+            <AppSidebar />
+            <main className="flex-1 p-4">
+              <SidebarTrigger />
+              <Outlet />
+            </main>
+          </SidebarProvider>
+        </div>
+      </div>
     </>
   );
 }

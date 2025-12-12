@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App.jsx";
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
+
 import "primeicons/primeicons.css";
 
 const router = createBrowserRouter([
