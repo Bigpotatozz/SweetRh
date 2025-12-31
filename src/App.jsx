@@ -3,12 +3,30 @@ import "./App.css";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { useEffect, useState } from "react";
+import { Navbar } from "./components/nav/Navbar";
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import { Outlet } from "react-router";
+   
+        
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">App funcionando</h1>
+    <PrimeReactProvider>
+      <div className="flex p-5 gap-5">
+      <Navbar></Navbar>
+
+     
+        <Outlet>
+        </Outlet>
+   
+      
+        
+      </div>
+  
+    </PrimeReactProvider>
+
+    
     </>
   );
 }
