@@ -8,6 +8,10 @@ import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Schedule } from "./components/schedule/Schedule.jsx";
+import { Proyectos } from "./components/proyectos/Proyectos.jsx";
+import { Raidd } from "./components/raidd/Raidd.jsx";
+import { Contratos } from "./components/contratos/Contratos.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -17,8 +21,21 @@ const router = createBrowserRouter([
       {
         path: "/schedule",
         element: <Schedule></Schedule>,
-
-      }
+      },
+      {
+        path: "/proyectos",
+        element: <Proyectos></Proyectos>,
+      },
+      {
+        path: "/raidd",
+        element: <Raidd></Raidd>,
+      },
+       {
+        path: "/contratos",
+        element: <Contratos></Contratos>,
+      },
+      
+      
     ]
   },
   

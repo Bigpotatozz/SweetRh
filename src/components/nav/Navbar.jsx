@@ -27,7 +27,7 @@ export const Navbar = () => {
     label: 'Schedule',
     items: [
       {
-        label: "Calendario",
+        label: "Ver agenda",
         icon: "pi pi-calendar",
         url: "/schedule"
       },
@@ -50,8 +50,9 @@ export const Navbar = () => {
     label: 'Proyectos',
     items: [
       {
-        label: "Todos los proyectos",
-        icon: "pi pi-folder"
+        label: "Ver proyectos",
+        icon: "pi pi-folder",
+        url: "/proyectos"
       },
 
       {
@@ -67,7 +68,8 @@ export const Navbar = () => {
     items: [
       {
         label: "Ver raidd",
-        icon: "pi pi-eye"
+        icon: "pi pi-eye",
+        url: "/raidd"
       },
 
 
@@ -77,8 +79,9 @@ export const Navbar = () => {
     label: 'Contratos',
     items: [
          {
-        label: "Todos contratos",
-        icon: "pi pi-file"
+        label: "Ver contratos",
+        icon: "pi pi-file",
+        url: "/contratos"
       },
       {
         label: "Nuevo contrato",
