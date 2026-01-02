@@ -1,10 +1,10 @@
 import React from 'react'
+import { Calendario } from './components/Calendario'
 
 export const Schedule = () => {
   return (
-    <div>
-
-        <h1>SCHEDULE FUNCIONANDO</h1>
+    <div className='w-full'>
+        <Calendario></Calendario>
     </div>
   )
 }
