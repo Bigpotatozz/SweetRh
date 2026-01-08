@@ -1,21 +1,22 @@
 import "./App.css";
-import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
-import { AppSidebar } from "./components/ui/AppSidebar";
+
+import { Button } from "primereact/button";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Navbar } from "./components/nav/Navbar";
+import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import { Outlet } from "react-router";
+
 function App() {
   return (
     <>
-      <div className="w-full">
-        <div className="min-h-screen">
-          <SidebarProvider>
-            <AppSidebar />
-            <main className="flex-1 p-4">
-              <SidebarTrigger />
-              <Outlet />
-            </main>
-          </SidebarProvider>
+      <PrimeReactProvider>
+        <div className="flex p-5 gap-5">
+          <Navbar></Navbar>
+
+          <Outlet></Outlet>
         </div>
-      </div>
+      </PrimeReactProvider>
     </>
   );
 }
