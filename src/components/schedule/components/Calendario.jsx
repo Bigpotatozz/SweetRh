@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import "temporal-polyfill/global";
 import {
@@ -21,30 +21,33 @@ export const Calendario = () => {
   const obtenerEventos = async () => {
     try {
       const response = await axios.get("http://localhost:3000/activity");
-
       const events = [];
       response.data.forEach((evento) => {
         events.push({
           id: evento.id_activity,
           title: evento.name,
-          start: Temporal.PlainDate.from(evento.start_date),
-          end: Temporal.PlainDate.from(evento.end_date),
+          start: Temporal.Instant.from(evento.start_date)
+            .toZonedDateTimeISO("UTC")
+            .toPlainDate(),
+          end: Temporal.Instant.from(evento.end_date)
+            .toZonedDateTimeISO("UTC")
+            .toPlainDate(),
           calendarId: evento.id_employee,
           description: evento.description,
         });
       });
 
       setEventos(events);
+
+      eventsService.set(events);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    (async () => {
-      await obtenerEventos();
-    })();
-  });
+    obtenerEventos();
+  }, []);
 
   const calendar = useCalendarApp({
     calendars: {
