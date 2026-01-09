@@ -23,6 +23,7 @@ const router = createBrowserRouter([
         path: "/schedule",
         element: <Schedule></Schedule>,
       },
+
       {
         path: "/proyectos",
         element: <Proyectos></Proyectos>,

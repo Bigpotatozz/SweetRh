@@ -49,12 +49,8 @@ export const Navbar = () => {
           },
         },
         {
-          label: "Editar actividad",
+          label: "Ver actividades",
           icon: "pi pi-calendar-minus",
-        },
-        {
-          label: "Eliminar actividad",
-          icon: "pi pi-calendar-times",
         },
       ],
     },

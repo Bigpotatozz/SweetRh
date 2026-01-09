@@ -25,7 +25,7 @@ export const Calendario = () => {
       response.data.forEach((evento) => {
         events.push({
           id: evento.id_activity,
-          title: evento.name,
+          title: `${evento.employee.name} ${evento.name}`,
           start: Temporal.Instant.from(evento.start_date)
             .toZonedDateTimeISO("UTC")
             .toPlainDate(),
@@ -54,87 +54,121 @@ export const Calendario = () => {
       1: {
         colorName: "Giovanni",
         lightColors: {
-          main: "#f91c45",
-          container: "#ffd2dc",
-          onContainer: "#59000d",
+          main: "#1f77b4",
+          container: "#d6eaf8",
+          onContainer: "#0b2e4a",
         },
         darkColors: {
-          main: "#ffc0cc",
-          container: "#a24258",
-          onContainer: "#ffdee6",
+          main: "#1f77b4",
+          container: "#0b2e4a",
+          onContainer: "#d6eaf8",
         },
       },
-
       2: {
         colorName: "Ivan",
         lightColors: {
-          main: "#f9d71c",
-          container: "#fff5aa",
-          onContainer: "#594800",
+          main: "#ff7f0e",
+          container: "#ffe3c7",
+          onContainer: "#5a2b00",
         },
         darkColors: {
-          main: "#fff5c0",
-          container: "#a29742",
-          onContainer: "#fff5de",
+          main: "#ff7f0e",
+          container: "#5a2b00",
+          onContainer: "#ffe3c7",
         },
       },
       3: {
         colorName: "Oscar",
         lightColors: {
-          main: "#e74c3c",
-          container: "#ffcdd2",
-          onContainer: "#5a1a13",
+          main: "#2ca02c",
+          container: "#d4f4d6",
+          onContainer: "#0f3b10",
         },
         darkColors: {
-          main: "#ff8a80",
-          container: "#b71c1c",
-          onContainer: "#ffeaec",
+          main: "#2ca02c",
+          container: "#0f3b10",
+          onContainer: "#d4f4d6",
         },
       },
-
       4: {
         colorName: "Carlos",
         lightColors: {
-          main: "#3498db",
-          container: "#bbdefb",
-          onContainer: "#0d3c61",
+          main: "#d62728",
+          container: "#ffd6d6",
+          onContainer: "#5a0f10",
         },
         darkColors: {
-          main: "#82b1ff",
-          container: "#1565c0",
-          onContainer: "#e3f2fd",
+          main: "#d62728",
+          container: "#5a0f10",
+          onContainer: "#ffd6d6",
         },
       },
-
       5: {
         colorName: "Fernando",
         lightColors: {
-          main: "#2ecc71",
-          container: "#c8e6c9",
-          onContainer: "#0f4d2b",
+          main: "#9467bd",
+          container: "#eadcf7",
+          onContainer: "#2e1a45",
         },
         darkColors: {
-          main: "#69f0ae",
-          container: "#1b5e20",
-          onContainer: "#e8f5e9",
+          main: "#9467bd",
+          container: "#2e1a45",
+          onContainer: "#eadcf7",
         },
       },
-
       6: {
         colorName: "Raymundo",
         lightColors: {
-          main: "#9b59b6",
-          container: "#e1bee7",
-          onContainer: "#3d1f47",
+          main: "#8c564b",
+          container: "#f0e0d8",
+          onContainer: "#3b2018",
         },
         darkColors: {
-          main: "#ce93d8",
-          container: "#6a1b9a",
-          onContainer: "#f3e5f5",
+          main: "#8c564b",
+          container: "#3b2018",
+          onContainer: "#f0e0d8",
+        },
+      },
+      7: {
+        colorName: "Empleado 7",
+        lightColors: {
+          main: "#e377c2",
+          container: "#fde1f2",
+          onContainer: "#5a1a45",
+        },
+        darkColors: {
+          main: "#e377c2",
+          container: "#5a1a45",
+          onContainer: "#fde1f2",
+        },
+      },
+      8: {
+        colorName: "Empleado 8",
+        lightColors: {
+          main: "#7f7f7f",
+          container: "#eeeeee",
+          onContainer: "#2b2b2b",
+        },
+        darkColors: {
+          main: "#7f7f7f",
+          container: "#2b2b2b",
+          onContainer: "#eeeeee",
+        },
+      },
+      9: {
+        colorName: "Empleado 9",
+        lightColors: {
+          main: "#bcbd22",
+          container: "#f7f7c6",
+          onContainer: "#4a4b00",
+        },
+        darkColors: {
+          main: "#bcbd22",
+          container: "#4a4b00",
+          onContainer: "#f7f7c6",
         },
       },
     },
-
     views: [
       createViewDay(),
       createViewWeek(),
