@@ -32,6 +32,15 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
   const [empleado, setEmpleado] = useState(0);
   const [empleados, setEmpleados] = useState([]);
 
+  const resetInputs = () => {
+    setActividad({});
+    setNombreActividad("");
+    setDescripcionActividad("");
+    setFechaInicioActividad("");
+    setFechaTerminoActividad("");
+    setEmpleado(0);
+  };
+
   const modificarActividad = async () => {
     const actividad_req = {
       id_employee: empleado,
@@ -62,6 +71,7 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
       console.log(response);
       onVisible2();
 
+      resetInputs();
       dispatch(activeReload());
     } catch (e) {
       console.log(e);

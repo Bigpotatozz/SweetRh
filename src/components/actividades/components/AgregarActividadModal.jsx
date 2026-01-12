@@ -34,6 +34,14 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
   const [empleado, setEmpleado] = useState(0);
   const [empleados, setEmpleados] = useState([]);
 
+  const resetInputs = () => {
+    setNombreActividad("");
+    setDescripcionActividad("");
+    setFechaInicioActividad("");
+    setFechaTerminoActividad("");
+    setEmpleado(0);
+  };
+
   const registrarActividad = async () => {
     const actividad = {
       id_employee: empleado,
@@ -62,7 +70,7 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
       showSuccess();
       console.log(response);
       onSetFalseModal();
-
+      resetInputs();
       handleReload();
     } catch (e) {
       console.log(e);
