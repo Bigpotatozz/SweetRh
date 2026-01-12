@@ -4,8 +4,13 @@ import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { activeReload, deactiveReload } from "../../../state/slice/ReloadSlice";
 
 const EliminarActividadModal = ({ visible3, onVisible3 }) => {
+  const reloadReducer = useSelector((state) => state.reload);
+  const dispatch = useDispatch();
+
   const toastSuccess = useRef(null);
 
   const showSuccess = () => {
@@ -35,10 +40,20 @@ const EliminarActividadModal = ({ visible3, onVisible3 }) => {
 
       onVisible3();
       showSuccess();
+
+      dispatch(activeReload());
     } catch (e) {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await obtenerActividades();
+      dispatch(deactiveReload());
+    })();
+  }, [reloadReducer]);
+
   useEffect(() => {
     (async () => {
       await obtenerActividades();

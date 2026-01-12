@@ -14,6 +14,8 @@ import { Proyectos } from "./components/proyectos/Proyectos.jsx";
 import { Raidd } from "./components/raidd/Raidd.jsx";
 import { Contratos } from "./components/contratos/Contratos.jsx";
 import VistaGeneralActividades from "./components/actividades/vistaGeneral/VistaGeneralActividades.jsx";
+import { Provider } from "react-redux";
+import { store } from "./state/store.js";
 
 const router = createBrowserRouter([
   {
@@ -47,5 +49,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router}></RouterProvider>
+  <Provider store={store}>
+    <RouterProvider router={router}></RouterProvider>
+  </Provider>
 );

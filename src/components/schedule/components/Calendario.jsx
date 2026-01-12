@@ -12,12 +12,21 @@ import "@schedule-x/theme-default/dist/index.css";
 import { createEventModalPlugin } from "@schedule-x/event-modal";
 import axios from "axios";
 import { Button } from "primereact/button";
+import { useDispatch, useSelector } from "react-redux";
+import { activeReload, deactiveReload } from "../../../state/slice/ReloadSlice";
 
 export const Calendario = () => {
   const eventsService = useState(() => createEventsServicePlugin())[0];
   const eventModal = createEventModalPlugin();
 
   const [eventos, setEventos] = useState([]);
+
+  const reloadReducer = useSelector((state) => state.reload);
+  const dispatch = useDispatch();
+
+  const handleReload = () => {
+    dispatch(activeReload());
+  };
 
   const obtenerEventos = async () => {
     try {
@@ -45,6 +54,11 @@ export const Calendario = () => {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    obtenerEventos();
+    dispatch(deactiveReload());
+  }, [reloadReducer]);
 
   useEffect(() => {
     obtenerEventos();

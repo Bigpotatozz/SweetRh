@@ -7,8 +7,12 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
 import { parsearFecha } from "../../../helpers/fechas";
+import { useDispatch, useSelector } from "react-redux";
+import { activeReload, deactiveReload } from "../../../state/slice/ReloadSlice";
 
 const ModificarActividadModal = ({ visible2, onVisible2 }) => {
+  const reloadReducer = useSelector((state) => state.reload);
+  const dispatch = useDispatch();
   const toastSuccess = useRef(null);
 
   const showSuccess = () => {
@@ -57,6 +61,8 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
       showSuccess();
       console.log(response);
       onVisible2();
+
+      dispatch(activeReload());
     } catch (e) {
       console.log(e);
     }
@@ -81,6 +87,14 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await obtenerActividades();
+      await obtenerEmpleados();
+      dispatch(deactiveReload());
+    })();
+  }, [reloadReducer]);
 
   useEffect(() => {
     (async () => {

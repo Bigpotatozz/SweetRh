@@ -6,8 +6,17 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { activeReload } from "../../../state/slice/ReloadSlice";
 
 const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
+  const reloadReducer = useSelector((state) => state.reload);
+  const dispatch = useDispatch();
+
+  const handleReload = () => {
+    dispatch(activeReload());
+  };
+
   const toastSuccess = useRef(null);
 
   const showSuccess = () => {
@@ -53,6 +62,8 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
       showSuccess();
       console.log(response);
       onSetFalseModal();
+
+      handleReload();
     } catch (e) {
       console.log(e);
     }

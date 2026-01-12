@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "primereact/menu";
 import logoOkaya from "../../assets/logo_okaya.png";
 import { useNavigate } from "react-router";
@@ -125,6 +125,7 @@ export const Navbar = () => {
       ],
     },
   ];
+
   return (
     <>
       <div className="w-48 h-screen">
