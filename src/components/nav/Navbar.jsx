@@ -79,6 +79,19 @@ export const Navbar = () => {
     },
 
     {
+      label: "Contratos",
+      items: [
+        {
+          label: "Ver contratos",
+          icon: "pi pi-file",
+          command: () => {
+            navigate("/contratos");
+          },
+        },
+      ],
+    },
+
+    {
       label: "Proyectos",
       items: [
         {
@@ -87,11 +100,6 @@ export const Navbar = () => {
           command: () => {
             navigate("/proyectos");
           },
-        },
-
-        {
-          label: "Nuevo proyecto",
-          icon: "pi pi-folder-plus",
         },
       ],
     },
@@ -105,22 +113,6 @@ export const Navbar = () => {
           command: () => {
             navigate("/raidd");
           },
-        },
-      ],
-    },
-    {
-      label: "Contratos",
-      items: [
-        {
-          label: "Ver contratos",
-          icon: "pi pi-file",
-          command: () => {
-            navigate("/contratos");
-          },
-        },
-        {
-          label: "Nuevo contrato",
-          icon: "pi pi-file-import",
         },
       ],
     },
