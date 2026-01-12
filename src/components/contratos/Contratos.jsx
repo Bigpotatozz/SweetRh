@@ -36,22 +36,15 @@ export const Contratos = () => {
   };
 
   return (
-    <div className="card max-w-6xl">
+    <div className="card max-w-6xl mx-h-screen">
       <div className="flex justify-start gap-2">
-        <ToggleButton
-          onIcon="pi pi-lock"
-          offIcon="pi pi-lock-open"
-          onLabel="Balance"
-          offLabel="Balance"
-        />
-
         <Button label="Nuevo contrato" severity="success" />
       </div>
 
       <DataTable
         value={contratos}
         scrollable
-        scrollHeight="400px"
+        scrollHeight="700px"
         className="mt-4"
         searc
       >
@@ -61,64 +54,85 @@ export const Contratos = () => {
           style={{ minWidth: "200px" }}
           frozen
           className="font-bold"
+          sortable
         ></Column>
-        <Column field="po" header="PO" style={{ minWidth: "100px" }}></Column>
+        <Column
+          field="po"
+          header="PO"
+          style={{ minWidth: "100px" }}
+          sortable
+        ></Column>
         <Column
           field="storage"
           header="Almacen"
           style={{ minWidth: "200px" }}
+          sortable
         ></Column>
         <Column
           field="facturado"
           header="Facturado"
           style={{ minWidth: "200px" }}
+          sortable
         ></Column>
         <Column
           field="deliveried"
           header="Entregado"
           style={{ minWidth: "200px" }}
+          sortable
         ></Column>
 
         <Column
           field="po_date"
           header="Po Date"
           style={{ minWidth: "200px" }}
+          sortable
         ></Column>
         <Column
           field="client"
           header="Customer"
           style={{ minWidth: "200px" }}
+          sortable
         ></Column>
-        <Column field="po2" header="PO2" style={{ minWidth: "200px" }}></Column>
+        <Column
+          field="po2"
+          header="PO2"
+          style={{ minWidth: "200px" }}
+          sortable
+        ></Column>
         <Column
           field="customer_po"
           header="Customer PO"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
+          sortable
         ></Column>
         <Column
           field="manufacter"
           header="Manufacter"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
+          sortable
         ></Column>
         <Column
           field="commodity"
           header="Commodity"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
+          sortable
         ></Column>
         <Column
           field="supplier_counterpart"
           header="supplier counterpart"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
+          sortable
         ></Column>
         <Column
           field="customer_po"
           header="Customer PO"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
+          sortable
         ></Column>
         <Column
           header="Acciones"
