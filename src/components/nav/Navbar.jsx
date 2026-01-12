@@ -8,12 +8,14 @@ import { InputText } from "primereact/inputtext";
 import { Calendar } from "lucide-react";
 import AgregarActividadModal from "../actividades/components/AgregarActividadModal";
 import ModificarActividadModal from "../actividades/components/ModificarActividadModal";
+import EliminarActividadModal from "../actividades/components/EliminarActividadModal";
 
 export const Navbar = () => {
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [visible3, setVisible3] = useState(false);
 
   const setFalseModal = () => {
     setVisible(false);
@@ -21,6 +23,10 @@ export const Navbar = () => {
 
   const onVisible2 = () => {
     setVisible2(false);
+  };
+
+  const onVisible3 = () => {
+    setVisible3(false);
   };
 
   const items = [
@@ -59,6 +65,14 @@ export const Navbar = () => {
           icon: "pi pi-pen-to-square",
           command: () => {
             setVisible2(true);
+          },
+        },
+
+        {
+          label: "Eliminar actividad",
+          icon: "pi pi-trash",
+          command: () => {
+            setVisible3(true);
           },
         },
       ],
@@ -114,6 +128,10 @@ export const Navbar = () => {
   return (
     <>
       <div className="w-48 h-screen">
+        <EliminarActividadModal
+          visible3={visible3}
+          onVisible3={onVisible3}
+        ></EliminarActividadModal>
         <ModificarActividadModal
           visible2={visible2}
           onVisible2={onVisible2}
