@@ -13,6 +13,7 @@ import { Schedule } from "./components/schedule/Schedule.jsx";
 import { Proyectos } from "./components/proyectos/Proyectos.jsx";
 import { Raidd } from "./components/raidd/Raidd.jsx";
 import { Contratos } from "./components/contratos/Contratos.jsx";
+import VistaGeneralActividades from "./components/actividades/vistaGeneral/VistaGeneralActividades.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
       {
         path: "/schedule",
         element: <Schedule></Schedule>,
+      },
+
+      {
+        path: "/actividades",
+        element: <VistaGeneralActividades></VistaGeneralActividades>,
       },
 
       {

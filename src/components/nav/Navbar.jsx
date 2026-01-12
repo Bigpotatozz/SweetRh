@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Menu } from "primereact/menu";
 import logoOkaya from "../../assets/logo_okaya.png";
 import { useNavigate } from "react-router";
@@ -7,14 +7,20 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "lucide-react";
 import AgregarActividadModal from "../actividades/components/AgregarActividadModal";
+import ModificarActividadModal from "../actividades/components/ModificarActividadModal";
 
 export const Navbar = () => {
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
 
   const setFalseModal = () => {
     setVisible(false);
+  };
+
+  const onVisible2 = () => {
+    setVisible2(false);
   };
 
   const items = [
@@ -49,8 +55,11 @@ export const Navbar = () => {
           },
         },
         {
-          label: "Ver actividades",
-          icon: "pi pi-calendar-minus",
+          label: "Modificar actividad",
+          icon: "pi pi-pen-to-square",
+          command: () => {
+            setVisible2(true);
+          },
         },
       ],
     },
@@ -105,6 +114,10 @@ export const Navbar = () => {
   return (
     <>
       <div className="w-48 h-screen">
+        <ModificarActividadModal
+          visible2={visible2}
+          onVisible2={onVisible2}
+        ></ModificarActividadModal>
         <AgregarActividadModal
           visible={visible}
           onSetFalseModal={setFalseModal}

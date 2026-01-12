@@ -11,6 +11,7 @@ import { createEventsServicePlugin } from "@schedule-x/events-service";
 import "@schedule-x/theme-default/dist/index.css";
 import { createEventModalPlugin } from "@schedule-x/event-modal";
 import axios from "axios";
+import { Button } from "primereact/button";
 
 export const Calendario = () => {
   const eventsService = useState(() => createEventsServicePlugin())[0];
