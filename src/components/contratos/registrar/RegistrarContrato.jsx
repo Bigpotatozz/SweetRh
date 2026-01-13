@@ -6,10 +6,12 @@ import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
 import axios from "axios";
 import { Button } from "primereact/button";
-
+import { Checkbox } from "primereact/checkbox";
 const RegistrarContrato = () => {
   const [empleados, setEmpleados] = useState([]);
   const [responsable, setResponsable] = useState("");
+
+  const [facturado, setFacturado] = useState(false);
   const [contrato, setContrato] = useState({
     contract_number: "",
     po_date: "",
@@ -135,55 +137,6 @@ const RegistrarContrato = () => {
           <div className="columna2">
             <div className="h-lh"></div>
 
-            <div>
-              <div className="card flex mt-2">
-                <div className="flex flex-column gap-2">
-                  <label htmlFor="po2">Fecha PO:</label>
-                  <div className="card flex justify-content-center">
-                    <Calendar
-                      value={contrato.po_date}
-                      onChange={(e) => {
-                        const object = { ...contrato };
-                        object.po_date = new Date(e.value);
-                        setContrato(object);
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <PersonalizedInput
-              label={"almacen:"}
-              id={"storage"}
-              onChange={(e) => {
-                const object = { ...contrato };
-                object.storage = e.target.value;
-                setContrato(object);
-              }}
-            ></PersonalizedInput>
-            <PersonalizedInput
-              label={"Facturado:"}
-              id={"facturado"}
-              onChange={(e) => {
-                const object = { ...contrato };
-                object.facturado = e.target.value;
-                setContrato(object);
-              }}
-            ></PersonalizedInput>
-            <PersonalizedInput
-              label={"Entregado: "}
-              id={"deliveried"}
-              onChange={(e) => {
-                const object = { ...contrato };
-                object.deliveried = e.target.value;
-                setContrato(object);
-              }}
-            ></PersonalizedInput>
-          </div>
-
-          <div className="columna">
-            <div className="h-lh"></div>
             <PersonalizedInput
               label={"Estatus: "}
               id={"estatus"}
@@ -193,6 +146,69 @@ const RegistrarContrato = () => {
                 setContrato(object);
               }}
             ></PersonalizedInput>
+
+            <div className="flex align-items-center mt-5">
+              <Checkbox
+                inputId="facturado"
+                name="facturado"
+                value={facturado}
+                onChange={() => {
+                  setFacturado(!facturado);
+                }}
+                checked={facturado}
+              />
+              <label htmlFor="facturado" className="ml-2 ">
+                PO
+              </label>
+            </div>
+            <div className="flex align-items-center mt-3">
+              <Checkbox
+                inputId="facturado"
+                name="facturado"
+                value={facturado}
+                onChange={() => {
+                  setFacturado(!facturado);
+                }}
+                checked={facturado}
+              />
+              <label htmlFor="facturado" className="ml-2 ">
+                En almacen
+              </label>
+            </div>
+
+            <div className="flex align-items-center mt-3">
+              <Checkbox
+                inputId="facturado"
+                name="facturado"
+                value={facturado}
+                onChange={() => {
+                  setFacturado(!facturado);
+                }}
+                checked={facturado}
+              />
+              <label htmlFor="facturado" className="ml-2">
+                Facturado
+              </label>
+            </div>
+
+            <div className="flex align-items-center mt-3">
+              <Checkbox
+                inputId="facturado"
+                name="facturado"
+                value={facturado}
+                onChange={() => {
+                  setFacturado(!facturado);
+                }}
+                checked={facturado}
+              />
+              <label htmlFor="facturado" className="ml-2">
+                Entregado
+              </label>
+            </div>
+          </div>
+
+          <div className="columna">
+            <div className="h-lh"></div>
           </div>
         </div>
 
