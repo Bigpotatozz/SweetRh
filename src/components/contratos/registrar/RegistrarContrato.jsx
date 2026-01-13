@@ -3,14 +3,25 @@ import { Outlet } from "react-router";
 import { InputText } from "primereact/inputtext";
 import PersonalizedInput from "./PersonalizedInput";
 import { Calendar } from "primereact/calendar";
+import { Dropdown } from "primereact/dropdown";
 
 const RegistrarContrato = () => {
   const [fechaPo, setFechaPo] = useState(null);
+
+  const [ingenieros, setIngenieros] = useState([
+    "Oscar",
+    "Fernando",
+    "Raymundo",
+  ]);
+
+  const [ingeniero, setIngeniero] = useState("");
 
   return (
     <>
       <div className="w-full flex justify-start gap-3">
         <div className="columna1">
+          <h2 className="font-bold">Información del contrato</h2>
+
           <PersonalizedInput
             label={"Numero de contrato:"}
             id={"num_contrato"}
@@ -47,6 +58,7 @@ const RegistrarContrato = () => {
         </div>
 
         <div className="columna1">
+          <div className="h-lh"></div>
           <PersonalizedInput
             label={"Commodity:"}
             id={"commodity"}
@@ -74,8 +86,27 @@ const RegistrarContrato = () => {
         </div>
 
         <div className="columna2">
+          <div className="h-lh"></div>
           <PersonalizedInput
-            label={"Estatus: "}
+            label={"Estatus : "}
+            id={"estatus"}
+          ></PersonalizedInput>
+        </div>
+
+        <div className="columna3">
+          <h2 className="font-bold">Información del proyecto</h2>
+          <PersonalizedInput
+            label={"Nombre del proyecto:"}
+            id={"nombre"}
+          ></PersonalizedInput>
+
+          <PersonalizedInput
+            label={"Descripción del proyecto:"}
+            id={"descripcion"}
+          ></PersonalizedInput>
+
+          <PersonalizedInput
+            label={"Estatus del proyecto:"}
             id={"estatus"}
           ></PersonalizedInput>
         </div>

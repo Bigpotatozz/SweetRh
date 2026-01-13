@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import PersonalizedInput from "./PersonalizedInput";
 
 const RegistrarProyecto = () => {
   return (
     <div>
-      <h1>Registrar proyecto funcionando</h1>
+      <div className="w-full flex justify-start gap-3"></div>
     </div>
   );
 };

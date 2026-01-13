@@ -43,17 +43,12 @@ const Pasos = () => {
 
   const items = [
     {
-      label: "Registrar contrato",
+      label: "Registrar contrato / proyecto",
       command: () => {
         navigate("/nuevoContrato/registrarContrato");
       },
     },
-    {
-      label: "Registrar proyecto",
-      command: () => {
-        navigate("/nuevoContrato/registrarProyecto");
-      },
-    },
+
     {
       label: "Registrar actividades",
       command: () => {
