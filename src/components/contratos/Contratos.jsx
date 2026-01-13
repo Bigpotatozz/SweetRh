@@ -4,7 +4,9 @@ import { Column } from "primereact/column";
 import { ToggleButton } from "primereact/togglebutton";
 import { Button } from "primereact/button";
 import axios from "axios";
+import { useNavigate } from "react-router";
 export const Contratos = () => {
+  const navigate = useNavigate();
   const [contratos, setContratos] = useState([]);
 
   const obtenerContratos = async () => {
@@ -14,10 +16,12 @@ export const Contratos = () => {
   };
 
   useEffect(() => {
-    obtenerContratos();
+    async () => {
+      await obtenerContratos();
+    };
   }, []);
 
-  const accionesTemplate = (rowData) => {
+  const accionesTemplate = () => {
     return (
       <div className="flex align-items-center gap-2">
         <i
@@ -38,7 +42,13 @@ export const Contratos = () => {
   return (
     <div className="card max-w-6xl mx-h-screen">
       <div className="flex justify-start gap-2">
-        <Button label="Nuevo contrato" severity="success" />
+        <Button
+          label="Nuevo contrato"
+          severity="success"
+          onClick={() => {
+            navigate("/nuevoContrato");
+          }}
+        />
       </div>
 
       <DataTable
@@ -47,6 +57,9 @@ export const Contratos = () => {
         scrollHeight="700px"
         className="mt-4"
         searc
+        onClick={(e) => {
+          alert(`ROW PRESIONADA ${e.target.value}`);
+        }}
       >
         <Column
           field="contract_number"

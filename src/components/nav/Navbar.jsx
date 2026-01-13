@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Menu } from "primereact/menu";
 import logoOkaya from "../../assets/logo_okaya.png";
 import { useNavigate } from "react-router";
