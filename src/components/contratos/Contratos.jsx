@@ -11,14 +11,12 @@ export const Contratos = () => {
 
   const obtenerContratos = async () => {
     const response = await axios.get("http://localhost:3000/contract/");
-    console.log(response.data);
+    console.log(response);
     setContratos(response.data);
   };
 
   useEffect(() => {
-    async () => {
-      await obtenerContratos();
-    };
+    obtenerContratos();
   }, []);
 
   const accionesTemplate = () => {
