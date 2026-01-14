@@ -87,11 +87,13 @@ export const Contratos = () => {
           body={(element) => (element.facturado ? "Facturado" : "Sin facturar")}
         ></Column>
         <Column
-          field="delivered"
+          field="deliveried"
           header="Entregado"
           style={{ minWidth: "200px" }}
           sortable
-          body={(element) => (element.delivered ? "Entregado" : "No entregado")}
+          body={(element) =>
+            element.deliveried ? "Entregado" : "No entregado"
+          }
         ></Column>
 
         <Column

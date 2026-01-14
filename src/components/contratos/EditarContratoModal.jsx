@@ -7,8 +7,9 @@ import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
-import { Calendar } from "lucide-react";
+import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
 
 const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
   const reloadReducer = useSelector((state) => state.reload);
@@ -61,37 +62,184 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
           onVisible2();
         }}
       >
-        <div className="flex flex-column gap-2 m-3"></div>
+        <div className="flex w-full justify-center gap-3">
+          <div className="flex align-items-center mt-3">
+            <Checkbox
+              inputId="facturado"
+              name="facturado"
+              value={contract.facturado}
+              onChange={() => {
+                const object = { ...contract };
+                object.facturado = !object.facturado;
+                setContract(object);
+              }}
+              checked={contract.facturado}
+            />
+            <label htmlFor="facturado" className="ml-1">
+              Facturado
+            </label>
+          </div>
+
+          <div className="flex align-items-center mt-3">
+            <Checkbox
+              inputId="storage"
+              name="storage"
+              value={contract.storage}
+              onChange={() => {
+                const object = { ...contract };
+                object.storage = !object.storage;
+                setContract(object);
+              }}
+              checked={contract.storage}
+            />
+            <label htmlFor="facturado" className="ml-1">
+              En almacen
+            </label>
+          </div>
+
+          <div className="flex align-items-center mt-3">
+            <Checkbox
+              inputId="po"
+              name="po"
+              value={contract.po}
+              onChange={() => {
+                const object = { ...contract };
+                object.po = !object.po;
+                setContract(object);
+              }}
+              checked={contract.po}
+            />
+            <label htmlFor="facturado" className="ml-1">
+              PO
+            </label>
+          </div>
+
+          <div className="flex align-items-center mt-3">
+            <Checkbox
+              inputId="deliveried"
+              name="deliveried"
+              value={contract.deliveried}
+              onChange={() => {
+                const object = { ...contract };
+                object.deliveried = !object.deliveried;
+                setContract(object);
+              }}
+              checked={contract.deliveried}
+            />
+            <label htmlFor="facturado" className="ml-1">
+              Entregado
+            </label>
+          </div>
+        </div>
+
+        <div className="flex">
+          <div className="flex flex-column gap-2 m-3 w-100">
+            <label htmlFor="po_date">PO Date:</label>
+            <Calendar
+              value={new Date(contract.po_date)}
+              onChange={(e) => {
+                const object = { ...contract };
+                object.po_date = new Date(e.value);
+                setContract(object);
+              }}
+              showTime
+              hourFormat="24"
+            />
+          </div>
+
+          <div className="flex flex-column gap-2 m-3 w-100">
+            <label htmlFor="po2">PO 2 Date:</label>
+            <Calendar
+              value={new Date(contract.po2)}
+              onChange={(e) => {
+                const object = { ...contract };
+                object.po2 = new Date(e.value);
+                setContract(object);
+              }}
+              showTime
+              hourFormat="24"
+            />
+          </div>
+        </div>
 
         <div className="flex flex-column gap-2 m-3">
-          <label htmlFor="actividad">Nombre de la actividad</label>
+          <label htmlFor="actividad">Numero de contrato</label>
           <InputText
             value={contract.contract_number}
-            id="actividad"
-            aria-describedby="nombre_actividad"
+            id="num_contrato"
+            aria-describedby="numero de contrato"
             onChange={(e) => {
-              console.log(e);
+              const object = { ...contract };
+              object.contract_number = e.target.value;
+              setContract(object);
             }}
           />
-          <small id="actividad-help">
-            Introduce el nombre de la actividad a realizar
-          </small>
+        </div>
+
+        <div className="flex flex-column gap-2 m-3">
+          <label htmlFor="actividad">Cliente</label>
+          <InputText
+            value={contract.client}
+            id="cllient"
+            aria-describedby="cliente"
+            onChange={(e) => {
+              const object = { ...contract };
+              object.client = e.target.value;
+              setContract(object);
+            }}
+          />
         </div>
         <div className="flex flex-column gap-2 m-3">
-          <label htmlFor="descripcion_actividad">
-            Descripción de la actividad
-          </label>
+          <label htmlFor="client_po">cliente PO</label>
           <InputText
-            value={contract.po_date}
-            id="descripcion_actividad"
-            aria-describedby="descripcion_actividad"
+            value={contract.customer_po}
+            id="client_po"
+            aria-describedby="cliente"
             onChange={(e) => {
-              console.log(e);
+              const object = { ...contract };
+              object.client_po = e.target.value;
+              setContract(object);
             }}
           />
-          <small id="descripcion-help">
-            Introduce la descripción de la actividad a realizar
-          </small>
+        </div>
+        <div className="flex flex-column gap-2 m-3">
+          <label htmlFor="manufacter">Manufacter</label>
+          <InputText
+            value={contract.manufacter}
+            id="manufacter"
+            aria-describedby="manufacter"
+            onChange={(e) => {
+              const object = { ...contract };
+              object.manufacter = e.target.value;
+              setContract(object);
+            }}
+          />
+        </div>
+        <div className="flex flex-column gap-2 m-3">
+          <label htmlFor="commodity">Commodity</label>
+          <InputText
+            value={contract.commodity}
+            id="commodity"
+            aria-describedby="commodity"
+            onChange={(e) => {
+              const object = { ...contract };
+              object.commodity = e.target.value;
+              setContract(object);
+            }}
+          />
+        </div>
+        <div className="flex flex-column gap-2 m-3">
+          <label htmlFor="supplier_counterpart">Supplier counterpart</label>
+          <InputText
+            value={contract.supplier_counterpart}
+            id="cllient"
+            aria-describedby="cliente"
+            onChange={(e) => {
+              const object = { ...contract };
+              object.supplier_counterpart = e.target.value;
+              setContract(object);
+            }}
+          />
         </div>
 
         <div className="flex gap-5 justify-center m-3">
@@ -99,7 +247,9 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
             label="Modificar"
             severity="info"
             className="w-110"
-            onClick={() => {}}
+            onClick={() => {
+              console.log(contract);
+            }}
           />
 
           <Button
