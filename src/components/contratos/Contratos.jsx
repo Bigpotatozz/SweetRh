@@ -11,7 +11,6 @@ export const Contratos = () => {
 
   const obtenerContratos = async () => {
     const response = await axios.get("http://localhost:3000/contract/");
-    console.log(response);
     setContratos(response.data);
   };
 
@@ -71,31 +70,38 @@ export const Contratos = () => {
           field="po"
           header="PO"
           style={{ minWidth: "100px" }}
+          body={(element) => (element.po ? "Si" : "No")}
           sortable
         ></Column>
         <Column
           field="storage"
-          header="Almacen"
+          header="Almacén"
           style={{ minWidth: "200px" }}
           sortable
+          body={(element) =>
+            element.storage ? "En almacen" : "Sin existencias"
+          }
         ></Column>
         <Column
           field="facturado"
           header="Facturado"
           style={{ minWidth: "200px" }}
           sortable
+          body={(element) => (element.facturado ? "Facturado" : "Sin facturar")}
         ></Column>
         <Column
-          field="deliveried"
+          field="delivered"
           header="Entregado"
           style={{ minWidth: "200px" }}
           sortable
+          body={(element) => (element.delivered ? "Entregado" : "No entregado")}
         ></Column>
 
         <Column
           field="po_date"
           header="Po Date"
           style={{ minWidth: "200px" }}
+          body={(element) => element.po_date.split("T")[0]}
           sortable
         ></Column>
         <Column
