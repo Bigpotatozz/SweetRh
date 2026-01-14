@@ -11,7 +11,10 @@ const RegistrarContrato = () => {
   const [empleados, setEmpleados] = useState([]);
   const [responsable, setResponsable] = useState("");
 
+  const [po, setPo] = useState(false);
+  const [storage, setStorage] = useState(false);
   const [facturado, setFacturado] = useState(false);
+  const [deliveried, setDeliveried] = useState(false);
   const [contrato, setContrato] = useState({
     contract_number: "",
     po_date: "",
@@ -21,10 +24,10 @@ const RegistrarContrato = () => {
     manufacter: "",
     commodity: "",
     supplier_counterpart: "",
-    po: "",
-    storage: "",
-    facturado: "",
-    deliveried: "",
+    po: false,
+    storage: false,
+    facturado: false,
+    deliveried: false,
     status: "",
   });
 
@@ -42,7 +45,10 @@ const RegistrarContrato = () => {
   }, []);
   return (
     <>
-      <div className="w-full flex-column justify-start gap-3 p-5">
+      <div
+        className="w-full flex-column justify-start gap-3 p-5 h-auto"
+        style={{ border: "solid 1px #EEEEEE", borderRadius: "8px" }}
+      >
         <div className="contrato flex gap-3">
           <div className="columna1">
             <h2 className="font-bold text-xl">Información del contrato</h2>
@@ -149,29 +155,36 @@ const RegistrarContrato = () => {
 
             <div className="flex align-items-center mt-5">
               <Checkbox
-                inputId="facturado"
-                name="facturado"
-                value={facturado}
+                inputId="po"
+                name="po"
+                value={po}
                 onChange={() => {
-                  setFacturado(!facturado);
+                  const object = { ...contrato };
+                  object.po = !po;
+                  setPo(!po);
+
+                  setContrato(object);
                 }}
-                checked={facturado}
+                checked={po}
               />
-              <label htmlFor="facturado" className="ml-2 ">
+              <label htmlFor="po" className="ml-2 ">
                 PO
               </label>
             </div>
             <div className="flex align-items-center mt-3">
               <Checkbox
-                inputId="facturado"
-                name="facturado"
-                value={facturado}
+                inputId="storage"
+                name="storage"
+                value={storage}
                 onChange={() => {
-                  setFacturado(!facturado);
+                  const object = { ...contrato };
+                  object.storage = !storage;
+                  setStorage(!storage);
+                  setContrato(object);
                 }}
-                checked={facturado}
+                checked={storage}
               />
-              <label htmlFor="facturado" className="ml-2 ">
+              <label htmlFor="storage" className="ml-2 ">
                 En almacen
               </label>
             </div>
@@ -182,7 +195,10 @@ const RegistrarContrato = () => {
                 name="facturado"
                 value={facturado}
                 onChange={() => {
+                  const object = { ...contrato };
+                  object.facturado = !facturado;
                   setFacturado(!facturado);
+                  setContrato(object);
                 }}
                 checked={facturado}
               />
@@ -193,15 +209,18 @@ const RegistrarContrato = () => {
 
             <div className="flex align-items-center mt-3">
               <Checkbox
-                inputId="facturado"
-                name="facturado"
-                value={facturado}
+                inputId="deliveried"
+                name="deliveried"
+                value={deliveried}
                 onChange={() => {
-                  setFacturado(!facturado);
+                  const object = { ...contrato };
+                  object.deliveried = !deliveried;
+                  setDeliveried(!deliveried);
+                  setContrato(object);
                 }}
-                checked={facturado}
+                checked={deliveried}
               />
-              <label htmlFor="facturado" className="ml-2">
+              <label htmlFor="deliveried" className="ml-2">
                 Entregado
               </label>
             </div>
