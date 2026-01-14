@@ -4,16 +4,17 @@ import { Column } from "primereact/column";
 import { ToggleButton } from "primereact/togglebutton";
 import { Button } from "primereact/button";
 import axios from "axios";
-import { useNavigate } from "react-router";
+
 import EditarContratoModal from "./EditarContratoModal";
 import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
+import RegistrarContratoModal from "./RegistrarContratoModal";
 export const Contratos = () => {
-  const navigate = useNavigate();
   const [contratos, setContratos] = useState([]);
 
   const [visible, setVisible] = useState(false);
 
+  const [visible2, setVisible2] = useState(false);
   const [idContrato, setIdContrato] = useState(0);
 
   const reloadReducer = useSelector((state) => state.reload);
@@ -36,6 +37,10 @@ export const Contratos = () => {
     setVisible(false);
   };
 
+  const onVisible2 = () => {
+    setVisible2(false);
+  };
+
   useEffect(() => {
     obtenerContratos();
     dispatch(deactiveReload());
@@ -43,6 +48,10 @@ export const Contratos = () => {
 
   return (
     <div className="card max-w-6xl mx-h-screen">
+      <RegistrarContratoModal
+        visible2={visible2}
+        onVisible2={onVisible2}
+      ></RegistrarContratoModal>
       <EditarContratoModal
         visible2={visible}
         onVisible2={onVisible}
@@ -53,7 +62,7 @@ export const Contratos = () => {
           label="Nuevo contrato"
           severity="success"
           onClick={() => {
-            navigate("/nuevoContrato");
+            setVisible2(true);
           }}
         />
       </div>
