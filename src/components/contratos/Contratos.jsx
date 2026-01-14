@@ -5,39 +5,39 @@ import { ToggleButton } from "primereact/togglebutton";
 import { Button } from "primereact/button";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import EditarContratoModal from "./EditarContratoModal";
 export const Contratos = () => {
   const navigate = useNavigate();
   const [contratos, setContratos] = useState([]);
 
+  const [visible, setVisible] = useState(false);
+
+  const [idContrato, setIdContrato] = useState(0);
+
   const obtenerContratos = async () => {
-    const response = await axios.get("http://localhost:3000/contract/");
-    setContratos(response.data);
+    try {
+      const response = await axios.get("http://localhost:3000/contract/");
+      setContratos(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onVisible = () => {
+    setVisible(false);
   };
 
   useEffect(() => {
     obtenerContratos();
   }, []);
 
-  const accionesTemplate = () => {
-    return (
-      <div className="flex align-items-center gap-2">
-        <i
-          className="pi pi-pen-to-square cursor-pointer"
-          style={{ color: "blue", fontSize: "1.2rem" }}
-          onClick={() => alert("BOTON EDITAR PRESIONADO")}
-        ></i>
-
-        <i
-          className="pi pi-trash cursor-pointer"
-          style={{ color: "red", fontSize: "1.2rem" }}
-          onClick={() => alert("BOTON ELIMINAR PRESIONADO")}
-        ></i>
-      </div>
-    );
-  };
-
   return (
     <div className="card max-w-6xl mx-h-screen">
+      <EditarContratoModal
+        visible2={visible}
+        onVisible2={onVisible}
+        idContrato={idContrato}
+      ></EditarContratoModal>
       <div className="flex justify-start gap-2">
         <Button
           label="Nuevo contrato"
@@ -53,10 +53,7 @@ export const Contratos = () => {
         scrollable
         scrollHeight="700px"
         className="mt-4"
-        searc
-        onClick={(e) => {
-          alert(`ROW PRESIONADA ${e.target.value}`);
-        }}
+        search
       >
         <Column
           field="contract_number"
@@ -155,7 +152,28 @@ export const Contratos = () => {
           header="Acciones"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
-          body={accionesTemplate}
+          body={(element) => {
+            return (
+              <>
+                <div className="flex align-items-center gap-2">
+                  <i
+                    className="pi pi-pen-to-square cursor-pointer"
+                    style={{ color: "blue", fontSize: "1.2rem" }}
+                    onClick={() => {
+                      setIdContrato(element.id_contract);
+                      setVisible(true);
+                    }}
+                  ></i>
+
+                  <i
+                    className="pi pi-trash cursor-pointer"
+                    style={{ color: "red", fontSize: "1.2rem" }}
+                    onClick={() => alert("BOTON ELIMINAR PRESIONADO")}
+                  ></i>
+                </div>
+              </>
+            );
+          }}
         ></Column>
       </DataTable>
     </div>

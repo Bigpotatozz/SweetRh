@@ -88,15 +88,23 @@ const RegistrarContrato = () => {
                 setContrato(object);
               }}
             ></PersonalizedInput>
-            <PersonalizedInput
-              label={"Fecha PO 2:"}
-              id={"po2"}
-              onChange={(e) => {
-                const object = { ...contrato };
-                object.po2 = e.target.value;
-                setContrato(object);
-              }}
-            ></PersonalizedInput>
+            <div>
+              <div className="card flex mt-2">
+                <div className="flex flex-column gap-2">
+                  <label htmlFor="po2">Fecha PO 2:</label>
+                  <div className="card flex justify-content-center">
+                    <Calendar
+                      value={contrato.po2}
+                      onChange={(e) => {
+                        const object = { ...contrato };
+                        object.po2 = new Date(e.value);
+                        setContrato(object);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="columna1">
