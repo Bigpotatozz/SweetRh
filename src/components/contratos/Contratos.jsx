@@ -6,6 +6,8 @@ import { Button } from "primereact/button";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import EditarContratoModal from "./EditarContratoModal";
+import { useDispatch, useSelector } from "react-redux";
+import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 export const Contratos = () => {
   const navigate = useNavigate();
   const [contratos, setContratos] = useState([]);
@@ -13,6 +15,13 @@ export const Contratos = () => {
   const [visible, setVisible] = useState(false);
 
   const [idContrato, setIdContrato] = useState(0);
+
+  const reloadReducer = useSelector((state) => state.reload);
+  const dispatch = useDispatch();
+
+  const handleReload = () => {
+    dispatch(activeReload());
+  };
 
   const obtenerContratos = async () => {
     try {
@@ -29,7 +38,8 @@ export const Contratos = () => {
 
   useEffect(() => {
     obtenerContratos();
-  }, []);
+    dispatch(deactiveReload());
+  }, [reloadReducer]);
 
   return (
     <div className="card max-w-6xl mx-h-screen">
@@ -114,6 +124,7 @@ export const Contratos = () => {
           header="PO2"
           style={{ minWidth: "200px" }}
           sortable
+          body={(element) => element.po2.split("T")[0]}
         ></Column>
         <Column
           field="customer_po"

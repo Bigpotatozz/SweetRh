@@ -18,12 +18,32 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
 
   const [contract, setContract] = useState({});
 
+  const estatus = ["ENTREGADO", "NO ENTREGADO", "EN PROCESO"];
+
   const showSuccess = () => {
     toastSuccess.current.show({
       severity: "success",
-      summary: "Actividad Modificada",
-      detail: "Actividad registrada correctamente",
+      summary: "Contrato Modificado",
+      detail: "Contrato modificado correctamente",
     });
+  };
+
+  const modificarContrato = async (idContrato) => {
+    console.log(contract);
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/contract/update/${idContrato}`,
+        contract
+      );
+
+      console.log(response);
+
+      onVisible2();
+      showSuccess();
+      dispatch(activeReload());
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const obtenerContrato = async (idContrato) => {
@@ -150,7 +170,11 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
           <div className="flex flex-column gap-2 m-3 w-100">
             <label htmlFor="po2">PO 2 Date:</label>
             <Calendar
-              value={new Date(contract.po2)}
+              value={
+                !contract.po2 || contract.po2 == "NA"
+                  ? null
+                  : new Date(contract.po2)
+              }
               onChange={(e) => {
                 const object = { ...contract };
                 object.po2 = new Date(e.value);
@@ -158,6 +182,22 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
               }}
               showTime
               hourFormat="24"
+            />
+          </div>
+
+          <div className="flex flex-column gap-2 m-3">
+            <label htmlFor="estatus">Estatus:</label>
+            <Dropdown
+              value={contract.status}
+              onChange={(e) => {
+                const object = { ...contract };
+                object.status = e.value;
+                setContract(object);
+              }}
+              options={estatus}
+              optionLabel="name"
+              placeholder="Actividad"
+              className="w-full"
             />
           </div>
         </div>
@@ -197,7 +237,7 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
             aria-describedby="cliente"
             onChange={(e) => {
               const object = { ...contract };
-              object.client_po = e.target.value;
+              object.customer_po = e.target.value;
               setContract(object);
             }}
           />
@@ -248,7 +288,7 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
             severity="info"
             className="w-110"
             onClick={() => {
-              console.log(contract);
+              modificarContrato(idContrato);
             }}
           />
 
