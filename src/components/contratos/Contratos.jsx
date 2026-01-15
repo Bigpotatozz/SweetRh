@@ -9,16 +9,15 @@ import EditarContratoModal from "./EditarContratoModal";
 import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 import RegistrarContratoModal from "./RegistrarContratoModal";
+import { InputText } from "primereact/inputtext";
 export const Contratos = () => {
   const [contratos, setContratos] = useState([]);
-
   const [visible, setVisible] = useState(false);
-
   const [visible2, setVisible2] = useState(false);
   const [idContrato, setIdContrato] = useState(0);
-
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
+  const [valueBuscador, setValueBuscador] = useState("");
 
   const handleReload = () => {
     dispatch(activeReload());
@@ -61,7 +60,7 @@ export const Contratos = () => {
         onVisible2={onVisible}
         idContrato={idContrato}
       ></EditarContratoModal>
-      <div className="flex justify-start gap-2">
+      <div className="flex justify-between gap-2">
         <Button
           label="Nuevo contrato"
           severity="success"
@@ -69,6 +68,18 @@ export const Contratos = () => {
             setVisible2(true);
           }}
         />
+
+        <div className="p-inputgroup flex-1">
+          <span className="p-inputgroup-addon">
+            <i className="pi pi-search"></i>
+          </span>
+          <InputText
+            placeholder="Buscar contrato"
+            onChange={(e) => {
+              setValueBuscador(e.target.value);
+            }}
+          />
+        </div>
       </div>
 
       <DataTable
@@ -77,6 +88,7 @@ export const Contratos = () => {
         scrollHeight="700px"
         className="mt-4"
         search
+        globalFilter={valueBuscador}
       >
         <Column
           field="contract_number"
