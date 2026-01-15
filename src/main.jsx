@@ -17,9 +17,6 @@ import VistaGeneralActividades from "./components/actividades/vistaGeneral/Vista
 import { Provider } from "react-redux";
 import { store } from "./state/store.js";
 
-import RegistrarContrato from "./components/contratos/registrar/RegistrarContrato.jsx";
-import RegistrarProyecto from "./components/contratos/registrar/RegistrarProyecto.jsx";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,11 +43,6 @@ const router = createBrowserRouter([
       {
         path: "/contratos",
         element: <Contratos></Contratos>,
-      },
-
-      {
-        path: "/nuevoContrato",
-        element: <RegistrarContrato></RegistrarContrato>,
       },
     ],
   },

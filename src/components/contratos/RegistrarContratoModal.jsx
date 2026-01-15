@@ -7,6 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 import axios from "axios";
 
 const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
@@ -16,6 +17,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
 
   const [contract, setContract] = useState({});
 
+  const [project, setProject] = useState({});
   const [empleados, setEmpleados] = useState([]);
   const [empleado, setEmpleado] = useState({});
 
@@ -38,7 +40,44 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
     }
   };
 
-  useEffect(() => {}, [reloadReducer]);
+  const registrarInformacion = async () => {
+    try {
+      const contrato = await axios.post(
+        "http://localhost:3000/contract/create/contractProject",
+        {
+          contract_number: contract.contract_number,
+          usuario: contract.usuario,
+          po_date: new Date(contract.po_date),
+          client: contract.client,
+          po2: contract.po2 ? new Date(contract.po2) : null,
+          customer_po: contract.customer_po,
+          manufacter: contract.manufacter,
+          commodity: contract.commodity,
+          supplier_counterpart: contract.supplier_counterpart,
+          po: contract.po ? true : false,
+          facturado: contract.facturado ? true : false,
+          storage: contract.storage ? true : false,
+          deliveried: contract.deliveried ? true : false,
+          status: contract.status,
+          name_proy: project.name,
+          description: project.description,
+          id_employee: empleado,
+        }
+      );
+
+      console.log(contrato);
+
+      onVisible2();
+      showSuccess();
+      dispatch(activeReload());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(deactiveReload());
+  }, [reloadReducer]);
 
   useEffect(() => {
     obtenerEmpleados();
@@ -137,8 +176,8 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 object.po_date = new Date(e.value);
                 setContract(object);
               }}
-              showTime
               hourFormat="24"
+              invalid={!contract.po_date}
             />
           </div>
 
@@ -155,8 +194,8 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 object.po2 = new Date(e.value);
                 setContract(object);
               }}
-              showTime
               hourFormat="24"
+              invalid={!contract.po2}
             />
           </div>
 
@@ -173,6 +212,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
               optionLabel="name"
               placeholder="Actividad"
               className="w-full"
+              invalid={!contract.status}
             />
           </div>
         </div>
@@ -189,6 +229,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 object.contract_number = e.target.value;
                 setContract(object);
               }}
+              invalid={!contract.contract_number}
             />
           </div>
           <div className="flex flex-column w-full">
@@ -266,32 +307,48 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
           </div>
         </div>
 
+        <div className="flex gap-2 m-3">
+          <div className="flex flex-column w-full">
+            <label htmlFor="actividad">Usuario</label>
+            <InputText
+              value={contract.usuario}
+              id="usuario"
+              aria-describedby="Usuario"
+              onChange={(e) => {
+                const object = { ...contract };
+                object.usuario = e.target.value;
+                setContract(object);
+              }}
+            />
+          </div>
+        </div>
+
         <h2 className="font-bold">Información del Proyecto</h2>
 
         <div className="flex gap-2 m-3">
           <div className="flex flex-column w-full ">
             <label htmlFor="actividad">Nombre</label>
             <InputText
-              value={contract.contract_number}
-              id="num_contrato"
-              aria-describedby="numero de contrato"
+              value={project.name}
+              id="name"
+              aria-describedby="Nombre de contrato"
               onChange={(e) => {
-                const object = { ...contract };
-                object.contract_number = e.target.value;
-                setContract(object);
+                const object = { ...project };
+                object.name = e.target.value;
+                setProject(object);
               }}
             />
           </div>
           <div className="flex flex-column w-full">
             <label htmlFor="actividad">Descripcion</label>
             <InputText
-              value={contract.client}
-              id="cllient"
-              aria-describedby="cliente"
+              value={project.description}
+              id="description"
+              aria-describedby="Descripción"
               onChange={(e) => {
-                const object = { ...contract };
-                object.client = e.target.value;
-                setContract(object);
+                const object = { ...project };
+                object.description = e.target.value;
+                setProject(object);
               }}
             />
           </div>
@@ -314,7 +371,9 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
             label="Registrar"
             severity="success"
             className="w-110"
-            onClick={() => {}}
+            onClick={() => {
+              registrarInformacion();
+            }}
           />
 
           <Button

@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
-import { parsearFecha } from "../../helpers/fechas";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
@@ -162,7 +161,6 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
                 object.po_date = new Date(e.value);
                 setContract(object);
               }}
-              showTime
               hourFormat="24"
             />
           </div>
@@ -180,7 +178,6 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
                 object.po2 = new Date(e.value);
                 setContract(object);
               }}
-              showTime
               hourFormat="24"
             />
           </div>

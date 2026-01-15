@@ -27,6 +27,10 @@ export const Contratos = () => {
   const obtenerContratos = async () => {
     try {
       const response = await axios.get("http://localhost:3000/contract/");
+
+      if (response.data.status === 404) {
+        return;
+      }
       setContratos(response.data);
     } catch (e) {
       console.log(e);
@@ -119,7 +123,9 @@ export const Contratos = () => {
           field="po_date"
           header="Po Date"
           style={{ minWidth: "200px" }}
-          body={(element) => element.po_date.split("T")[0]}
+          body={(element) =>
+            element.po_date ? element.po_date.split("T")[0] : "NA"
+          }
           sortable
         ></Column>
         <Column
@@ -133,7 +139,7 @@ export const Contratos = () => {
           header="PO2"
           style={{ minWidth: "200px" }}
           sortable
-          body={(element) => element.po2.split("T")[0]}
+          body={(element) => (element.po2 ? element.po2.split("T")[0] : "NA")}
         ></Column>
         <Column
           field="customer_po"
