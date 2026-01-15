@@ -177,7 +177,6 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 setContract(object);
               }}
               hourFormat="24"
-              invalid={!contract.po_date}
             />
           </div>
 
@@ -195,7 +194,6 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 setContract(object);
               }}
               hourFormat="24"
-              invalid={!contract.po2}
             />
           </div>
 
@@ -212,7 +210,6 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
               optionLabel="name"
               placeholder="Actividad"
               className="w-full"
-              invalid={!contract.status}
             />
           </div>
         </div>
@@ -229,7 +226,6 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 object.contract_number = e.target.value;
                 setContract(object);
               }}
-              invalid={!contract.contract_number}
             />
           </div>
           <div className="flex flex-column w-full">

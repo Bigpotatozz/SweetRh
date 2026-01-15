@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 import RegistrarContratoModal from "./RegistrarContratoModal";
 import { InputText } from "primereact/inputtext";
+import * as XLSX from "xlsx";
 export const Contratos = () => {
   const [contratos, setContratos] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -18,6 +19,27 @@ export const Contratos = () => {
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
   const [valueBuscador, setValueBuscador] = useState("");
+
+  const exportExcel = () => {
+    // Mapea los datos con nombres bonitos
+    const datosFormateados = contratos.map((contrato) => ({
+      "No. Contrato": contrato.contract_number,
+      Cliente: contrato.client,
+      "Fecha PO": contrato.po_date?.split("T")[0] || "",
+      PO: contrato.po ? "Sí" : "No",
+      Almacén: contrato.storage ? "En almacén" : "Sin existencias",
+      Facturado: contrato.facturado ? "Facturado" : "Sin facturar",
+      Entregado: contrato.deliveried ? "Entregado" : "No entregado",
+      Fabricante: contrato.manufacter,
+      Commodity: contrato.commodity,
+      // ... agrega todos los campos que quieras exportar
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(datosFormateados);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Contratos");
+    XLSX.writeFile(workbook, `CONTRATOS.xlsx`);
+  };
 
   const handleReload = () => {
     dispatch(activeReload());
@@ -67,6 +89,14 @@ export const Contratos = () => {
           onClick={() => {
             setVisible2(true);
           }}
+        />
+
+        <Button
+          label="Exportar"
+          icon="pi pi-table"
+          iconPos="right"
+          style={{ background: "#1D6F42" }}
+          onClick={exportExcel}
         />
 
         <div className="p-inputgroup flex-1">
