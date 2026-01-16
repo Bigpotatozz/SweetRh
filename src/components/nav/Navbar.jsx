@@ -116,6 +116,19 @@ export const Navbar = () => {
         },
       ],
     },
+
+    {
+      label: "Personas",
+      items: [
+        {
+          label: "Ver personas",
+          icon: "pi pi-eye",
+          command: () => {
+            navigate("/empleados");
+          },
+        },
+      ],
+    },
   ];
 
   return (

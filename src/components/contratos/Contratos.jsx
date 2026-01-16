@@ -128,6 +128,15 @@ export const Contratos = () => {
           className="font-bold"
           sortable
         ></Column>
+
+        <Column
+          field="usuario"
+          header="Usuario"
+          style={{ minWidth: "200px" }}
+          frozen
+          className="font-bold"
+          sortable
+        ></Column>
         <Column
           field="po"
           header="PO"
@@ -235,11 +244,11 @@ export const Contratos = () => {
                     }}
                   ></i>
 
-                  <i
+                  {/* <i
                     className="pi pi-trash cursor-pointer"
                     style={{ color: "red", fontSize: "1.2rem" }}
                     onClick={() => alert("BOTON ELIMINAR PRESIONADO")}
-                  ></i>
+                  ></i>*/}
                 </div>
               </>
             );

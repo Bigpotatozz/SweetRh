@@ -16,6 +16,7 @@ import { Contratos } from "./components/contratos/Contratos.jsx";
 import VistaGeneralActividades from "./components/actividades/vistaGeneral/VistaGeneralActividades.jsx";
 import { Provider } from "react-redux";
 import { store } from "./state/store.js";
+import Empleados from "./components/empleados/Empleados.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/contratos",
         element: <Contratos></Contratos>,
+      },
+      {
+        path: "/empleados",
+        element: <Empleados></Empleados>,
       },
     ],
   },
