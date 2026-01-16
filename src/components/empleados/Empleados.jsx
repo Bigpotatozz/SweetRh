@@ -2,13 +2,24 @@ import axios from "axios";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AgregarEmpleadoModal from "./components/AgregarEmpleadoModal";
 import { useDispatch, useSelector } from "react-redux";
-import { deactiveReload } from "../../state/slice/ReloadSlice";
+import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 import EditarEmpleadoModal from "./components/EditarEmpleadoModal";
+import { Toast } from "primereact/toast";
 
 const Empleados = () => {
+  const toastEliminar = useRef(null);
+
+  const showEliminar = () => {
+    toastEliminar.current.show({
+      severity: "warning",
+      summary: "Persona eliminada",
+      detail: "Persona eliminada correctamente",
+    });
+  };
+
   const [empleados, setEmpleados] = useState([]);
   const [visible, setVisible] = useState(false);
 
@@ -36,12 +47,26 @@ const Empleados = () => {
     }
   };
 
+  const eliminarEmpleado = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/employee/delete/${id}`
+      );
+      console.log(response.data);
+      showEliminar();
+      dispatch(activeReload());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     obtenerEmpleados();
     dispatch(deactiveReload());
   }, [reloadReducer]);
   return (
     <div className="w-full">
+      <Toast ref={toastEliminar}></Toast>
       <EditarEmpleadoModal
         visible2={visible2}
         onVisible2={onSetVisible2}
@@ -68,14 +93,14 @@ const Empleados = () => {
       >
         <Column
           field="name"
-          header="Contract No."
+          header="Nombre"
           frozen
           className="font-bold"
           sortable
           headerClassName=""
         ></Column>
 
-        <Column field="position" header="Usuario" frozen sortable></Column>
+        <Column field="position" header="Puesto" frozen sortable></Column>
 
         <Column
           header="Acciones"
@@ -96,7 +121,9 @@ const Empleados = () => {
                   <i
                     className="pi pi-trash cursor-pointer"
                     style={{ color: "red", fontSize: "1.2rem" }}
-                    onClick={() => {}}
+                    onClick={() => {
+                      eliminarEmpleado(element.id_employee);
+                    }}
                   ></i>
                 </div>
               </>

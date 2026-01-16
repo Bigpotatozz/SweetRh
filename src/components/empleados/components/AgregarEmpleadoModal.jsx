@@ -36,10 +36,18 @@ const AgregarEmpleadoModal = ({ visible2, onVisible2 }) => {
 
       showSuccess();
       onVisible2();
+      limpiarInputs();
       dispatch(activeReload());
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const limpiarInputs = () => {
+    setEmpleado({
+      name: "",
+      position: "",
+    });
   };
 
   useEffect(() => {

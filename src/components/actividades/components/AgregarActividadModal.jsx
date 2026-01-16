@@ -90,7 +90,7 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
     (async () => {
       await obtenerEmpleados();
     })();
-  }, []);
+  }, [visible]);
   return (
     <div>
       <Toast ref={toastSuccess} />
