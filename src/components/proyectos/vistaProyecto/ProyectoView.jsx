@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import CalendarioProyecto from "./CalendarioProyecto";
 import { Calendar } from "primereact/calendar";
 import FormActividad from "./FormActividad";
+import { Button } from "primereact/button";
 
 const ProyectoView = () => {
   const { id } = useParams();
@@ -86,6 +87,14 @@ const ProyectoView = () => {
             </>
           );
         })}
+      </div>
+
+      <div className="flex justify-center m-2 radius">
+        <Button
+          icon="pi pi-plus-circle"
+          style={{ borderRadius: "100%" }}
+          onClick={() => {}}
+        />
       </div>
       <div id="map" className="w-full">
         <CalendarioProyecto></CalendarioProyecto>
