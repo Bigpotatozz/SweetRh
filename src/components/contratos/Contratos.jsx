@@ -21,7 +21,6 @@ export const Contratos = () => {
   const [valueBuscador, setValueBuscador] = useState("");
 
   const exportExcel = () => {
-    // Mapea los datos con nombres bonitos
     const datosFormateados = contratos.map((contrato) => ({
       "No. Contrato": contrato.contract_number,
       Cliente: contrato.client,
@@ -32,7 +31,6 @@ export const Contratos = () => {
       Entregado: contrato.deliveried ? "Entregado" : "No entregado",
       Fabricante: contrato.manufacter,
       Commodity: contrato.commodity,
-      // ... agrega todos los campos que quieras exportar
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(datosFormateados);

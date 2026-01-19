@@ -17,6 +17,7 @@ import VistaGeneralActividades from "./components/actividades/vistaGeneral/Vista
 import { Provider } from "react-redux";
 import { store } from "./state/store.js";
 import Empleados from "./components/empleados/Empleados.jsx";
+import ProyectoView from "./components/proyectos/vistaProyecto/ProyectoView.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
         path: "/proyectos",
         element: <Proyectos></Proyectos>,
       },
+
+      {
+        path: "/proyecto/:id",
+        element: <ProyectoView></ProyectoView>,
+      },
       {
         path: "/raidd",
         element: <Raidd></Raidd>,
@@ -56,5 +62,5 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={router}></RouterProvider>
-  </Provider>
+  </Provider>,
 );
