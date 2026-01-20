@@ -42,7 +42,7 @@ export const Proyectos = () => {
   }, [reloadReducer]);
 
   return (
-    <div className="card max-w-6xl w-full">
+    <div className="w-full">
       <div className="flex justify-between gap-2 w-full">
         <Button
           label="Nuevo contrato"
@@ -77,7 +77,7 @@ export const Proyectos = () => {
         value={proyectos}
         scrollable
         scrollHeight="700px"
-        className="mt-4 flex justify-between"
+        className="mt-4  w-full "
         search
         onRowClick={(e) => {
           navigate(`/proyecto/${e.data.id_project}`);

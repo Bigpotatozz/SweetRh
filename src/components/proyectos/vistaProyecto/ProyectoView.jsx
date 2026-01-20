@@ -2,41 +2,64 @@ import axios from "axios";
 import { Dropdown } from "primereact/dropdown";
 import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import CalendarioProyecto from "./CalendarioProyecto";
 import { Calendar } from "primereact/calendar";
 import FormActividad from "./FormActividad";
 import { Button } from "primereact/button";
-
+import { TabView, TabPanel } from "primereact/tabview";
+import { Divider } from "primereact/divider";
+import { Toast } from "primereact/toast";
+import { ScrollPanel } from "primereact/scrollpanel";
 const ProyectoView = () => {
   const { id } = useParams();
+  const toastSuccess = useRef(null);
 
   const [proyecto, setProyecto] = useState({});
 
   const [actividades, setActividades] = useState([
     {
-      id: 1,
-      nombre: "",
-      descripcion: "",
-      fechaInicio: "",
-      fechaFin: "",
-      estatus: "",
+      id_activity: 1,
+      name: "",
+      description: "",
+      start_date: "",
+      end_date: "",
+      status: "",
       id_employee: "",
     },
   ]);
 
-  const [ingenieros, setIngenieros] = useState(["GIOVANNI", "JUAN", "PEDRO"]);
+  const [ingenieros, setIngenieros] = useState([]);
   const [ingeniero, setIngeniero] = useState("");
 
   const [value, setValue] = useState("");
 
+  const showSuccess = () => {
+    toastSuccess.current.show({
+      severity: "success",
+      summary: "Contrato Registrado",
+      detail: "Contrato registrado correctamente",
+    });
+  };
   const sobreEscribirActividad = (id, elemento, value) => {
     setActividades(
       actividades.map((actividad) =>
-        actividad.id == id ? { ...actividad, [elemento]: value } : actividad,
+        actividad.id_activity == id
+          ? { ...actividad, [elemento]: value }
+          : actividad,
       ),
     );
+  };
+
+  const obtenerEmpleados = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/employee/list");
+      console.log(response.data);
+      setIngenieros(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const obtenerProyecto = async () => {
@@ -50,8 +73,35 @@ const ProyectoView = () => {
     }
   };
 
+  const registrarActividades = async () => {
+    try {
+      for (let actividad of actividades) {
+        const response = await axios.post(
+          "http://localhost:3000/projectActivities/create",
+
+          {
+            name: actividad.name,
+            description: actividad.description,
+            start_date: actividad.start_date ? actividad.start_date : null,
+            end_date: actividad.end_date ? actividad.end_date : null,
+            status: actividad.status,
+            id_employee: actividad.id_employee,
+            id_project: proyecto.id_project,
+          },
+        );
+
+        console.log(response);
+
+        showSuccess();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     obtenerProyecto();
+    obtenerEmpleados();
   }, []);
 
   useEffect(() => {
@@ -59,6 +109,7 @@ const ProyectoView = () => {
   }, [actividades]);
   return (
     <div className="w-full">
+      <Toast ref={toastSuccess} />
       <div className="w-full flex gap-3 ">
         <h2>
           <strong>Proyecto: </strong>
@@ -74,40 +125,54 @@ const ProyectoView = () => {
           <strong>Descripción:</strong> {proyecto.description}
         </h2>
       </div>
-      <div className="flex flex-column gap-5 mt-4">
-        {actividades.map((e) => {
-          return (
-            <>
-              <FormActividad
-                actividad={e}
-                key={e.id}
-                empleados={ingenieros}
-                sobreEscribirActividad={sobreEscribirActividad}
-              ></FormActividad>
-            </>
-          );
-        })}
-      </div>
 
-      <div className="flex justify-center m-2 radius gap-2">
-        <Button
-          icon="pi pi-plus-circle"
-          style={{ borderRadius: "100%" }}
-          onClick={() => {
-            setActividades([...actividades, {}]);
-          }}
-        />
+      <TabView>
+        <TabPanel header="Actividades">
+          <div className="flex flex-column items-center">
+            <ScrollPanel className="w-full h-screen">
+              {actividades.map((e) => {
+                return (
+                  <>
+                    <FormActividad
+                      actividad={e}
+                      key={e.id_activity}
+                      empleados={ingenieros}
+                      sobreEscribirActividad={sobreEscribirActividad}
+                    ></FormActividad>
 
-        <Button
-          icon="pi pi-save"
-          severity="success"
-          style={{ borderRadius: "100%" }}
-          onClick={() => {}}
-        />
-      </div>
-      <div id="map" className="w-full">
-        <CalendarioProyecto></CalendarioProyecto>
-      </div>
+                    <Divider></Divider>
+                  </>
+                );
+              })}
+
+              <div className="flex justify-center m-2 radius gap-2">
+                <Button
+                  icon="pi pi-plus-circle"
+                  style={{ borderRadius: "100%" }}
+                  onClick={() => {
+                    setActividades([...actividades, {}]);
+                  }}
+                />
+
+                <Button
+                  icon="pi pi-save"
+                  severity="success"
+                  style={{ borderRadius: "100%" }}
+                  onClick={() => {
+                    registrarActividades();
+                  }}
+                />
+              </div>
+            </ScrollPanel>
+          </div>
+        </TabPanel>
+
+        <TabPanel header="Calendario">
+          <div id="map" className="w-full">
+            <CalendarioProyecto></CalendarioProyecto>
+          </div>
+        </TabPanel>
+      </TabView>
     </div>
   );
 };

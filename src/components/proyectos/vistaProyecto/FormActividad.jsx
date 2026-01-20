@@ -5,46 +5,56 @@ import { InputText } from "primereact/inputtext";
 import React from "react";
 
 const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
-  const status = ["ENTREGADO", "NO ENTREGADO", "EN PROCESO"];
+  const status = ["COMPLETADO", "EN PROCESO", "NO INICIADO", "EN RIESGO"];
 
   return (
     <div className="flex gap-2">
-      <FloatLabel>
-        <InputText
-          id="actividad"
-          value={actividad.nombre}
-          onChange={(e) => {
-            sobreEscribirActividad(actividad.id, "nombre", e.target.value);
-          }}
-        />
-        <label htmlFor="actividad">Nombre actividad</label>
-      </FloatLabel>
-      <FloatLabel>
-        <InputText
-          id="descripcion"
-          value={actividad.descripcion}
-          onChange={(e) => {
-            sobreEscribirActividad(actividad.id, "descripcion", e.target.value);
-          }}
-        />
-        <label htmlFor="descripcion">Descripcion</label>
-      </FloatLabel>
+      <InputText
+        id="actividad"
+        placeholder="Nombre actividad"
+        value={actividad.name}
+        onChange={(e) => {
+          sobreEscribirActividad(actividad.id_activity, "name", e.target.value);
+        }}
+      />
+
+      <InputText
+        id="description"
+        placeholder="Descripción"
+        value={actividad.description}
+        onChange={(e) => {
+          sobreEscribirActividad(
+            actividad.id_activity,
+            "description",
+            e.target.value,
+          );
+        }}
+      />
 
       <Dropdown
         value={actividad.id_employee}
         onChange={(e) => {
-          sobreEscribirActividad(actividad.id, "id_employee", e.target.value);
+          sobreEscribirActividad(
+            actividad.id_activity,
+            "id_employee",
+            e.target.value,
+          );
         }}
         options={empleados}
-        optionLabel="responsable"
+        optionLabel="name"
+        optionValue="id_employee"
         placeholder="Responsable"
         className="w-full md:w-14rem"
       />
 
       <Dropdown
-        value={actividad.estatus}
+        value={actividad.status}
         onChange={(e) => {
-          sobreEscribirActividad(actividad.id, "estatus", e.target.value);
+          sobreEscribirActividad(
+            actividad.id_activity,
+            "status",
+            e.target.value,
+          );
         }}
         options={status}
         optionLabel="estatus"
@@ -55,9 +65,14 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
       <FloatLabel>
         <Calendar
           inputId="start_date"
-          value={actividad.fechaInicio ? new Date(actividad.fechaInicio) : null}
+          value={actividad.start_date ? new Date(actividad.start_date) : null}
+          dateFormat="yy/dd/mm"
           onChange={(e) => {
-            sobreEscribirActividad(actividad.id, "fechaInicio", e.target.value);
+            sobreEscribirActividad(
+              actividad.id_activity,
+              "start_date",
+              e.target.value.toISOString().split("T")[0],
+            );
           }}
         />
         <label htmlFor="start_date">Start date</label>
@@ -65,9 +80,14 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
       <FloatLabel>
         <Calendar
           inputId="end_date"
-          value={actividad.fechaFin ? new Date(actividad.fechaFin) : null}
+          value={actividad.end_date ? new Date(actividad.end_date) : null}
+          dateFormat="yy/dd/mm"
           onChange={(e) => {
-            sobreEscribirActividad(actividad.id, "fechaFin", e.target.value);
+            sobreEscribirActividad(
+              actividad.id_activity,
+              "end_date",
+              e.target.value.toISOString().split("T")[0],
+            );
           }}
         />
         <label htmlFor="end_date">End date</label>

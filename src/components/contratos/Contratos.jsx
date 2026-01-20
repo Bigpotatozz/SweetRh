@@ -70,7 +70,7 @@ export const Contratos = () => {
   }, [reloadReducer]);
 
   return (
-    <div className="card max-w-6xl mx-h-screen">
+    <div className="card overflow-hidden mx-h-screen">
       <RegistrarContratoModal
         visible2={visible2}
         onVisible2={onVisible2}
