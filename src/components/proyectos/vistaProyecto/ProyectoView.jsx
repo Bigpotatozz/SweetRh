@@ -12,6 +12,7 @@ import { TabView, TabPanel } from "primereact/tabview";
 import { Divider } from "primereact/divider";
 import { Toast } from "primereact/toast";
 import { ScrollPanel } from "primereact/scrollpanel";
+import GanttTable from "./GanttTable";
 const ProyectoView = () => {
   const { id } = useParams();
   const toastSuccess = useRef(null);
@@ -107,6 +108,7 @@ const ProyectoView = () => {
   useEffect(() => {
     console.log(actividades);
   }, [actividades]);
+
   return (
     <div className="w-full">
       <Toast ref={toastSuccess} />
@@ -169,7 +171,7 @@ const ProyectoView = () => {
 
         <TabPanel header="Calendario">
           <div id="map" className="w-full">
-            <CalendarioProyecto></CalendarioProyecto>
+            <GanttTable></GanttTable>
           </div>
         </TabPanel>
       </TabView>
