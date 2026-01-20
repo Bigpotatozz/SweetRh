@@ -59,7 +59,7 @@ const ProyectoView = () => {
   }, [actividades]);
   return (
     <div className="w-full">
-      <div className="w-full flex gap-3">
+      <div className="w-full flex gap-3 ">
         <h2>
           <strong>Proyecto: </strong>
           {proyecto.name}
@@ -74,7 +74,7 @@ const ProyectoView = () => {
           <strong>Descripción:</strong> {proyecto.description}
         </h2>
       </div>
-      <div className="flex gap-2 mb-2">
+      <div className="flex flex-column gap-5 mt-4">
         {actividades.map((e) => {
           return (
             <>
@@ -89,9 +89,18 @@ const ProyectoView = () => {
         })}
       </div>
 
-      <div className="flex justify-center m-2 radius">
+      <div className="flex justify-center m-2 radius gap-2">
         <Button
           icon="pi pi-plus-circle"
+          style={{ borderRadius: "100%" }}
+          onClick={() => {
+            setActividades([...actividades, {}]);
+          }}
+        />
+
+        <Button
+          icon="pi pi-save"
+          severity="success"
           style={{ borderRadius: "100%" }}
           onClick={() => {}}
         />

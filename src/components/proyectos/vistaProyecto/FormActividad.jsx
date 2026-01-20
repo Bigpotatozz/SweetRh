@@ -8,7 +8,7 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
   const status = ["ENTREGADO", "NO ENTREGADO", "EN PROCESO"];
 
   return (
-    <div className="flex gap-2 mt-5">
+    <div className="flex gap-2">
       <FloatLabel>
         <InputText
           id="actividad"
