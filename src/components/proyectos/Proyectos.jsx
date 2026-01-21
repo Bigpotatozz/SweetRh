@@ -27,6 +27,9 @@ export const Proyectos = () => {
       const response = await axios.get("http://localhost:3000/project/");
       console.log(response.data);
 
+      if (response.data.status === 404) {
+        return;
+      }
       setProyectos(response.data);
     } catch (e) {
       console.log(e);

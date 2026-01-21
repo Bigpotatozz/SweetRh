@@ -15,21 +15,10 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
         value={actividad.name}
         onChange={(e) => {
           sobreEscribirActividad(
-            actividad.id_project_activity,
+            actividad.id_project_activity
+              ? actividad.id_project_activity
+              : actividad.id_activity,
             "name",
-            e.target.value,
-          );
-        }}
-      />
-
-      <InputText
-        id="description"
-        placeholder="Descripción"
-        value={actividad.description}
-        onChange={(e) => {
-          sobreEscribirActividad(
-            actividad.id_project_activity,
-            "description",
             e.target.value,
           );
         }}
@@ -39,7 +28,9 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
         value={actividad.id_employee}
         onChange={(e) => {
           sobreEscribirActividad(
-            actividad.id_project_activity,
+            actividad.id_project_activity
+              ? actividad.id_project_activity
+              : actividad.id_activity,
             "id_employee",
             e.target.value,
           );
@@ -55,7 +46,9 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
         value={actividad.status}
         onChange={(e) => {
           sobreEscribirActividad(
-            actividad.id_project_activity,
+            actividad.id_project_activity
+              ? actividad.id_project_activity
+              : actividad.id_activity,
             "status",
             e.target.value,
           );
@@ -72,7 +65,9 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
           value={actividad.start_date ? new Date(actividad.start_date) : null}
           onChange={(e) => {
             sobreEscribirActividad(
-              actividad.id_project_activity,
+              actividad.id_project_activity
+                ? actividad.id_project_activity
+                : actividad.id_activity,
               "start_date",
               e.target.value.toLocaleDateString().split("T")[0],
             );
@@ -87,7 +82,9 @@ const FormActividad = ({ actividad, sobreEscribirActividad, empleados }) => {
           dateFormat="yy/dd/mm"
           onChange={(e) => {
             sobreEscribirActividad(
-              actividad.id_project_activity,
+              actividad.id_project_activity
+                ? actividad.id_project_activity
+                : actividad.id_activity,
               "end_date",
               e.target.value.toLocaleDateString().split("T")[0],
             );

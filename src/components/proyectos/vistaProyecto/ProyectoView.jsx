@@ -17,15 +17,16 @@ const ProyectoView = () => {
   const { id } = useParams();
   const toastSuccess = useRef(null);
 
+  const [contadorAct, setContadorAct] = useState(0);
   const [proyecto, setProyecto] = useState({});
 
   const [actividades, setActividades] = useState([
     {
-      id_activity: 1,
+      id_activity: contadorAct,
       name: "",
       description: "",
-      start_date: "",
-      end_date: "",
+      start_date: null,
+      end_date: null,
       status: "",
       id_employee: "",
       id_project: id,
@@ -47,9 +48,13 @@ const ProyectoView = () => {
   const sobreEscribirActividad = (id, elemento, value) => {
     setActividades(
       actividades.map((actividad) =>
-        actividad.id_project_activity == id
-          ? { ...actividad, [elemento]: value }
-          : actividad,
+        actividad.id_project_activity
+          ? actividad.id_project_activity == id
+            ? { ...actividad, [elemento]: value }
+            : actividad
+          : actividad.id_activity == id
+            ? { ...actividad, [elemento]: value }
+            : actividad,
       ),
     );
   };
@@ -122,7 +127,10 @@ const ProyectoView = () => {
   return (
     <div className="w-full">
       <Toast ref={toastSuccess} />
-      <div className="w-full flex gap-3 ">
+      <div
+        className="w-full flex gap-3 border rounded-md p-2"
+        style={{ borderColor: "#ECECEC" }}
+      >
         <h2>
           <strong>Proyecto: </strong>
           {proyecto.name}
@@ -162,7 +170,15 @@ const ProyectoView = () => {
                   icon="pi pi-plus-circle"
                   style={{ borderRadius: "100%" }}
                   onClick={() => {
-                    setActividades([...actividades, { id_project: id }]);
+                    setContadorAct(contadorAct + 1);
+
+                    setActividades([
+                      ...actividades,
+                      {
+                        id_activity: contadorAct + 1,
+                        id_project: id,
+                      },
+                    ]);
                   }}
                 />
 
@@ -181,7 +197,7 @@ const ProyectoView = () => {
 
         <TabPanel header="Calendario">
           <div id="map" className="w-full">
-            <GanttTable></GanttTable>
+            <GanttTable actividades={actividades}></GanttTable>
           </div>
         </TabPanel>
       </TabView>
