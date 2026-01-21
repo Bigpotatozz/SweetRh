@@ -62,7 +62,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
           name_proy: project.name,
           description: project.description,
           id_employee: empleado,
-        }
+        },
       );
 
       console.log(contrato);

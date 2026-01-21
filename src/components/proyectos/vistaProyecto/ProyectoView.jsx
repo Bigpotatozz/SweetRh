@@ -96,6 +96,10 @@ const ProyectoView = () => {
         `http://localhost:3000/projectActivities/findActivitiesByProject/${id}`,
       );
 
+      if (response.data.status) {
+        return;
+      }
+
       setActividades(response.data);
     } catch (e) {
       console.log(e);
@@ -106,6 +110,8 @@ const ProyectoView = () => {
     obtenerProyecto();
     obtenerEmpleados();
     obtenerActividades();
+
+    console.log(actividades);
   }, []);
 
   useEffect(() => {
