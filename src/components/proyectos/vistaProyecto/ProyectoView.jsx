@@ -28,6 +28,7 @@ const ProyectoView = () => {
       end_date: "",
       status: "",
       id_employee: "",
+      id_project: id,
     },
   ]);
 
