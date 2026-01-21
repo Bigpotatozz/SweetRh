@@ -31,6 +31,10 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
     });
   };
 
+  const limpiarCampos = () => {
+    setContract({});
+    setProject({});
+  };
   const obtenerEmpleados = async () => {
     try {
       const response = await axios.get("http://localhost:3000/employee/list");
@@ -70,6 +74,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
       onVisible2();
       showSuccess();
       dispatch(activeReload());
+      limpiarCampos();
     } catch (e) {
       console.log(e);
     }
