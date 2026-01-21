@@ -46,7 +46,7 @@ const ProyectoView = () => {
   const sobreEscribirActividad = (id, elemento, value) => {
     setActividades(
       actividades.map((actividad) =>
-        actividad.id_activity == id
+        actividad.id_project_activity == id
           ? { ...actividad, [elemento]: value }
           : actividad,
       ),
@@ -76,25 +76,27 @@ const ProyectoView = () => {
 
   const registrarActividades = async () => {
     try {
-      for (let actividad of actividades) {
-        const response = await axios.post(
-          "http://localhost:3000/projectActivities/create",
+      const response = await axios.post(
+        "http://localhost:3000/projectActivities/smartAddActivity",
 
-          {
-            name: actividad.name,
-            description: actividad.description,
-            start_date: actividad.start_date ? actividad.start_date : null,
-            end_date: actividad.end_date ? actividad.end_date : null,
-            status: actividad.status,
-            id_employee: actividad.id_employee,
-            id_project: proyecto.id_project,
-          },
-        );
+        actividades,
+      );
 
-        console.log(response);
+      console.log(response);
 
-        showSuccess();
-      }
+      showSuccess();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const obtenerActividades = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/projectActivities/findActivitiesByProject/${id}`,
+      );
+
+      setActividades(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -103,6 +105,7 @@ const ProyectoView = () => {
   useEffect(() => {
     obtenerProyecto();
     obtenerEmpleados();
+    obtenerActividades();
   }, []);
 
   useEffect(() => {
@@ -152,7 +155,7 @@ const ProyectoView = () => {
                   icon="pi pi-plus-circle"
                   style={{ borderRadius: "100%" }}
                   onClick={() => {
-                    setActividades([...actividades, {}]);
+                    setActividades([...actividades, { id_project: id }]);
                   }}
                 />
 
