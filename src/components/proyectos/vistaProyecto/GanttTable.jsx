@@ -46,12 +46,7 @@ const GanttTable = ({ actividades }) => {
     <>
       <div className="w-full">
         <Willow>
-          <Gantt
-            tasks={actividadesGantt}
-            links={links}
-            scales={scales}
-            readonly={true}
-          ></Gantt>
+          <Gantt tasks={actividadesGantt} links={links} scales={scales}></Gantt>
         </Willow>
       </div>
     </>
