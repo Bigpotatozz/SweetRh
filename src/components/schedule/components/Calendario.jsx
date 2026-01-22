@@ -30,12 +30,21 @@ export const Calendario = () => {
 
   const obtenerEventos = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/activity");
+      const response = await axios.get(
+        "http://localhost:3000/activity/getAllActivities",
+      );
+
+      console.log("prueba de actividades ///");
+      console.log(response.data);
       const events = [];
+
       response.data.forEach((evento) => {
+        if (evento.end_date === null || evento.start_date === undefined) {
+          return;
+        }
         events.push({
           id: evento.id_activity,
-          title: `${evento.employee.name} ${evento.name}`,
+          title: `${evento.name_employee} ${evento.name}`,
           start: Temporal.Instant.from(evento.start_date)
             .toZonedDateTimeISO("UTC")
             .toPlainDate(),
@@ -43,7 +52,9 @@ export const Calendario = () => {
             .toZonedDateTimeISO("UTC")
             .toPlainDate(),
           calendarId: evento.id_employee,
-          description: evento.description,
+          description: evento.description
+            ? evento.description
+            : "Sin descripcion",
         });
       });
 
