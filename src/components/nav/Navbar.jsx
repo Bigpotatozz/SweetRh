@@ -50,7 +50,7 @@ export const Navbar = () => {
           label: "Ver agenda",
           icon: "pi pi-calendar",
           command: () => {
-            navigate("/schedule");
+            navigate("/");
           },
         },
         {
