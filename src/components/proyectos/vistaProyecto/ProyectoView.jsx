@@ -125,7 +125,7 @@ const ProyectoView = () => {
   }, [actividades]);
 
   return (
-    <div className="w-full">
+    <div className="w-full max-h-100">
       <Toast ref={toastSuccess} />
       <div
         className="w-full flex gap-3 border rounded-md p-2"
@@ -149,7 +149,7 @@ const ProyectoView = () => {
       <TabView>
         <TabPanel header="Actividades">
           <div className="flex flex-column items-center">
-            <ScrollPanel className="w-full h-screen">
+            <ScrollPanel className="w-full h-150">
               {actividades.map((e) => {
                 return (
                   <>

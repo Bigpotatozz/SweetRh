@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <PrimeReactProvider>
-        <div className="flex p-5 gap-5">
+        <div className="flex p-5 gap-5 ">
           <Navbar></Navbar>
 
           <Outlet></Outlet>
