@@ -13,12 +13,19 @@ import { Divider } from "primereact/divider";
 import { Toast } from "primereact/toast";
 import { ScrollPanel } from "primereact/scrollpanel";
 import GanttTable from "./GanttTable";
+import AgregarActividadModalP from "./AgregarActividadModalP";
 const ProyectoView = () => {
   const { id } = useParams();
   const toastSuccess = useRef(null);
 
   const [contadorAct, setContadorAct] = useState(0);
   const [proyecto, setProyecto] = useState({});
+
+  const [visible, setVisible] = useState(false);
+
+  const onSetVisible = () => {
+    setVisible(false);
+  };
 
   const [actividades, setActividades] = useState([
     {
@@ -45,19 +52,6 @@ const ProyectoView = () => {
       detail: "Contrato registrado correctamente",
     });
   };
-  const sobreEscribirActividad = (id, elemento, value) => {
-    setActividades(
-      actividades.map((actividad) =>
-        actividad.id_project_activity
-          ? actividad.id_project_activity == id
-            ? { ...actividad, [elemento]: value }
-            : actividad
-          : actividad.id_activity == id
-            ? { ...actividad, [elemento]: value }
-            : actividad,
-      ),
-    );
-  };
 
   const obtenerEmpleados = async () => {
     try {
@@ -75,22 +69,6 @@ const ProyectoView = () => {
       console.log(response.data);
 
       setProyecto(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const registrarActividades = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/projectActivities/smartAddActivity",
-
-        actividades,
-      );
-
-      console.log(response);
-
-      showSuccess();
     } catch (e) {
       console.log(e);
     }
@@ -125,82 +103,52 @@ const ProyectoView = () => {
   }, [actividades]);
 
   return (
-    <div className="w-full max-h-100">
+    <div className="w-full h-full overflow-hidden">
+      <AgregarActividadModalP
+        visible={visible}
+        onSetFalseModal={onSetVisible}
+      ></AgregarActividadModalP>
       <Toast ref={toastSuccess} />
       <div
-        className="w-full flex gap-3 border rounded-md p-2"
+        className="flex justify-between w-full"
         style={{ borderColor: "#ECECEC" }}
       >
-        <h2>
-          <strong>Proyecto: </strong>
-          {proyecto.name}
-        </h2>
-        <h2>
-          <strong>Responsable:</strong> {proyecto.id_employee}
-        </h2>
-        <h2>
-          <strong>Cliente:</strong> {proyecto.client}
-        </h2>
-        <h2>
-          <strong>Descripción:</strong> {proyecto.description}
-        </h2>
+        <div className="w-full flex gap-3 p-2 items-center">
+          <h2>
+            <strong>Proyecto: </strong>
+            {proyecto.name}
+          </h2>
+          <h2>
+            <strong>Responsable:</strong> {proyecto.id_employee}
+          </h2>
+          <h2>
+            <strong>Cliente:</strong> {proyecto.client}
+          </h2>
+          <h2>
+            <strong>Descripción:</strong> {proyecto.description}
+          </h2>
+        </div>
+        <div className="flex gap-2 p-2">
+          <Button
+            icon="pi pi-plus"
+            aria-label="Filter"
+            severity="success"
+            onClick={() => {
+              setVisible(true);
+            }}
+          />
+          <Button
+            icon="pi pi-pen-to-square"
+            aria-label="Filter"
+            severity="primary"
+          />
+          <Button icon="pi pi-trash" aria-label="Filter" severity="danger" />
+        </div>
       </div>
 
-      <TabView>
-        <TabPanel header="Actividades">
-          <div className="flex flex-column items-center">
-            <ScrollPanel className="w-full h-150">
-              {actividades.map((e) => {
-                return (
-                  <>
-                    <FormActividad
-                      actividad={e}
-                      key={e.id_activity}
-                      empleados={ingenieros}
-                      sobreEscribirActividad={sobreEscribirActividad}
-                    ></FormActividad>
-
-                    <Divider></Divider>
-                  </>
-                );
-              })}
-
-              <div className="flex justify-center m-2 radius gap-2">
-                <Button
-                  icon="pi pi-plus-circle"
-                  style={{ borderRadius: "100%" }}
-                  onClick={() => {
-                    setContadorAct(contadorAct + 1);
-
-                    setActividades([
-                      ...actividades,
-                      {
-                        id_activity: contadorAct + 1,
-                        id_project: id,
-                      },
-                    ]);
-                  }}
-                />
-
-                <Button
-                  icon="pi pi-save"
-                  severity="success"
-                  style={{ borderRadius: "100%" }}
-                  onClick={() => {
-                    registrarActividades();
-                  }}
-                />
-              </div>
-            </ScrollPanel>
-          </div>
-        </TabPanel>
-
-        <TabPanel header="Calendario">
-          <div id="map" className="w-full">
-            <GanttTable actividades={actividades}></GanttTable>
-          </div>
-        </TabPanel>
-      </TabView>
+      <div id="map" className="w-full">
+        <GanttTable actividades={actividades}></GanttTable>
+      </div>
     </div>
   );
 };
