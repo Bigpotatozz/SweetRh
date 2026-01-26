@@ -20,6 +20,7 @@ export const Contratos = () => {
   const dispatch = useDispatch();
   const [valueBuscador, setValueBuscador] = useState("");
 
+  const [nameNextContract, setNameNextContract] = useState("");
   const exportExcel = () => {
     const datosFormateados = contratos.map((contrato) => ({
       "No. Contrato": contrato.contract_number,
@@ -50,6 +51,12 @@ export const Contratos = () => {
       if (response.data.status === 404) {
         return;
       }
+
+      console.log(response.data);
+
+      setNameNextContract(
+        response.data[response.data.length - 1].contract_number,
+      );
       setContratos(response.data);
     } catch (e) {
       console.log(e);
@@ -74,6 +81,7 @@ export const Contratos = () => {
       <RegistrarContratoModal
         visible2={visible2}
         onVisible2={onVisible2}
+        nextContractName={contratos.length > 0 ? nameNextContract : "OKM260000"}
       ></RegistrarContratoModal>
       <EditarContratoModal
         visible2={visible}

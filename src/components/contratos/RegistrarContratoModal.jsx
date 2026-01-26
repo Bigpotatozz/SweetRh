@@ -10,12 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 import axios from "axios";
 
-const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
+const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
   const toastSuccess = useRef(null);
 
   const [contract, setContract] = useState({});
+  const [contractName, setContractName] = useState(nextContractName);
 
   const [project, setProject] = useState({});
   const [empleados, setEmpleados] = useState([]);
@@ -49,7 +50,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
       const contrato = await axios.post(
         "http://localhost:3000/contract/create/contractProject",
         {
-          contract_number: contract.contract_number,
+          contract_number: derivedContractName,
           usuario: contract.usuario,
           po_date: new Date(contract.po_date),
           client: contract.client,
@@ -87,6 +88,13 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
   useEffect(() => {
     obtenerEmpleados();
   }, [visible2]);
+
+  const splittedContractName = nextContractName
+    ? nextContractName.split("M")
+    : [];
+  const contractNum =
+    splittedContractName.length > 1 ? parseInt(splittedContractName[1]) : 0;
+  const derivedContractName = nextContractName ? `OKM${contractNum + 1}` : "";
 
   return (
     <div>
@@ -223,14 +231,10 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
           <div className="flex flex-column w-full ">
             <label htmlFor="actividad">Numero de contrato</label>
             <InputText
-              value={contract.contract_number}
+              value={derivedContractName}
               id="num_contrato"
               aria-describedby="numero de contrato"
-              onChange={(e) => {
-                const object = { ...contract };
-                object.contract_number = e.target.value;
-                setContract(object);
-              }}
+              disabled
             />
           </div>
           <div className="flex flex-column w-full">
@@ -330,7 +334,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
           <div className="flex flex-column w-full ">
             <label htmlFor="actividad">Nombre</label>
             <InputText
-              value={project.name}
+              value={derivedContractName}
               id="name"
               aria-describedby="Nombre de contrato"
               onChange={(e) => {
@@ -338,6 +342,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2 }) => {
                 object.name = e.target.value;
                 setProject(object);
               }}
+              disabled
             />
           </div>
           <div className="flex flex-column w-full">
