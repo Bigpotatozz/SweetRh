@@ -44,31 +44,35 @@ const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
   };
 
   const modificarActividad = async () => {
-    const actividad_req = {
-      id_employee: empleado,
-      name: nombreActividad,
-      start_date:
-        String(fechaInicioActividad.getFullYear()).padStart(4, "0") +
-        "-" +
-        String(fechaInicioActividad.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(fechaInicioActividad.getDate()).padStart(2, "0"),
-      end_date:
-        String(fechaTerminoActividad.getFullYear()).padStart(4, "0") +
-        "-" +
-        String(fechaTerminoActividad.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(fechaTerminoActividad.getDate()).padStart(2, "0"),
-    };
-
     try {
       console.log(actividad);
       const response = await axios.patch(
-        `http://localhost:3000/activity/update/${actividad.id_activity}`,
-        actividad_req,
+        `http://localhost:3000/projectActivities/update/${actividad.id_project_activity}`,
+        {
+          id_employee: empleado,
+          name: nombreActividad,
+          description: "",
+          start_date: fechaInicioActividad
+            ? String(fechaInicioActividad.getFullYear()).padStart(4, "0") +
+              "-" +
+              String(fechaInicioActividad.getMonth() + 1).padStart(2, "0") +
+              "-" +
+              String(fechaInicioActividad.getDate()).padStart(2, "0")
+            : null,
+          end_date: fechaTerminoActividad
+            ? String(fechaTerminoActividad.getFullYear()).padStart(4, "0") +
+              "-" +
+              String(fechaTerminoActividad.getMonth() + 1).padStart(2, "0") +
+              "-" +
+              String(fechaTerminoActividad.getDate()).padStart(2, "0")
+            : null,
+          status: estatus,
+          id_project: id,
+        },
       );
 
       showSuccess();
+      console.log("AQUIIIIIIIIIIIII");
       console.log(response);
       onVisible2();
 
@@ -136,8 +140,17 @@ const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
           <Dropdown
             value={actividad}
             onChange={(e) => {
-              console.log(e.value);
               setActividad(e.value);
+              setNombreActividad(e.value.name);
+              setEmpleado(e.value.id_employee);
+              setFechaInicioActividad(
+                e.value.start_date ? new Date(e.value.start_date) : null,
+              );
+              setFechaTerminoActividad(
+                e.value.end_date ? new Date(e.value.end_date) : null,
+              );
+
+              setEstatus(e.value.status);
             }}
             options={actividades}
             optionLabel="name"
@@ -167,8 +180,8 @@ const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
               setEstatus(e.value);
             }}
             options={status}
-            optionLabel="name"
-            placeholder="Actividad"
+            optionLabel="estatus"
+            placeholder="Estatus"
             className="w-full"
             appendTo="self"
           />

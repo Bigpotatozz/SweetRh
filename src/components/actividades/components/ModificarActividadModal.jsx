@@ -95,8 +95,7 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
 
       if (response.data.activities.length === 0) {
         return;
-      }
-      setActividades(response.data);
+      } else setActividades(response.data.activities);
     } catch (e) {
       console.log(e);
     }
