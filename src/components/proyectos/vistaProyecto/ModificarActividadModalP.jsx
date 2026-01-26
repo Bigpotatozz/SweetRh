@@ -9,8 +9,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { parsearFecha } from "../../../helpers/fechas";
 import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../../state/slice/ReloadSlice";
+import { useParams } from "react-router";
 
-const ModificarActividadModal = ({ visible2, onVisible2 }) => {
+const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
+  const status = ["COMPLETADO", "EN PROCESO", "NO INICIADO", "EN RIESGO"];
+  const { id } = useParams();
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
   const toastSuccess = useRef(null);
@@ -26,16 +29,15 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
   const [actividades, setActividades] = useState([]);
   const [actividad, setActividad] = useState({});
   const [nombreActividad, setNombreActividad] = useState();
-  const [descripcionActividad, setDescripcionActividad] = useState("");
   const [fechaInicioActividad, setFechaInicioActividad] = useState("");
   const [fechaTerminoActividad, setFechaTerminoActividad] = useState("");
+  const [estatus, setEstatus] = useState("");
   const [empleado, setEmpleado] = useState(0);
   const [empleados, setEmpleados] = useState([]);
 
   const resetInputs = () => {
     setActividad({});
     setNombreActividad("");
-    setDescripcionActividad("");
     setFechaInicioActividad("");
     setFechaTerminoActividad("");
     setEmpleado(0);
@@ -45,7 +47,6 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
     const actividad_req = {
       id_employee: empleado,
       name: nombreActividad,
-      description: descripcionActividad,
       start_date:
         String(fechaInicioActividad.getFullYear()).padStart(4, "0") +
         "-" +
@@ -89,11 +90,13 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
 
   const obtenerActividades = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/activity/");
+      const response = await axios.get(
+        `http://localhost:3000/projectActivities/findActivitiesByProject/${id}`,
+      );
 
       console.log(response);
 
-      if (response.data.activities.length === 0) {
+      if (response.data.status === 404) {
         return;
       }
       setActividades(response.data);
@@ -135,20 +138,12 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
             onChange={(e) => {
               console.log(e.value);
               setActividad(e.value);
-              setNombreActividad(e.value.name);
-              setDescripcionActividad(e.value.description);
-              setEmpleado(e.value.id_employee);
-              setFechaInicioActividad(
-                new Date(parsearFecha(e.value.start_date)),
-              );
-              setFechaTerminoActividad(
-                new Date(parsearFecha(e.value.end_date)),
-              );
             }}
             options={actividades}
             optionLabel="name"
             placeholder="Actividad"
             className="w-full"
+            appendTo="self"
           />
         </div>
 
@@ -162,25 +157,21 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
               setNombreActividad(e.target.value);
             }}
           />
-          <small id="actividad-help">
-            Introduce el nombre de la actividad a realizar
-          </small>
         </div>
+
         <div className="flex flex-column gap-2 m-3">
-          <label htmlFor="descripcion_actividad">
-            Descripción de la actividad
-          </label>
-          <InputText
-            value={descripcionActividad}
-            id="descripcion_actividad"
-            aria-describedby="descripcion_actividad"
+          <label htmlFor="estatus">Estatus:</label>
+          <Dropdown
+            value={estatus}
             onChange={(e) => {
-              setDescripcionActividad(e.target.value);
+              setEstatus(e.value);
             }}
+            options={status}
+            optionLabel="name"
+            placeholder="Actividad"
+            className="w-full"
+            appendTo="self"
           />
-          <small id="descripcion-help">
-            Introduce la descripción de la actividad a realizar
-          </small>
         </div>
 
         <div className="flex gap-2 justify-between m-3">
@@ -192,6 +183,7 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
             optionLabel="name"
             placeholder="Responsable"
             className="w-full"
+            appendTo="self"
           />
         </div>
         <div className="flex gap-2 justify-between">
@@ -203,9 +195,6 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
               showTime
               hourFormat="24"
             />
-            <small id="fecha_inicio-help">
-              Introduce la fecha de inicio de la actividad
-            </small>
           </div>
 
           <div className="flex flex-column gap-2 m-3 w-100">
@@ -216,9 +205,6 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
               showTime
               hourFormat="24"
             />
-            <small id="fecha_termino-help">
-              Introduce la fecha de termino de la actividad
-            </small>
           </div>
         </div>
 
@@ -244,4 +230,4 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
   );
 };
 
-export default ModificarActividadModal;
+export default ModificarActividadPModal;

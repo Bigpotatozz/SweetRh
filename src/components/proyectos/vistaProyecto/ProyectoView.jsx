@@ -16,6 +16,7 @@ import GanttTable from "./GanttTable";
 import AgregarActividadModalP from "./AgregarActividadModalP";
 import { deactiveReload } from "../../../state/slice/ReloadSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ModificarActividadPModal from "./ModificarActividadModalP";
 const ProyectoView = () => {
   const { id } = useParams();
   const toastSuccess = useRef(null);
@@ -26,6 +27,11 @@ const ProyectoView = () => {
   const [proyecto, setProyecto] = useState({});
 
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+
+  const onSetVisible2 = () => {
+    setVisible2(false);
+  };
 
   const onSetVisible = () => {
     setVisible(false);
@@ -117,6 +123,11 @@ const ProyectoView = () => {
         visible={visible}
         onSetFalseModal={onSetVisible}
       ></AgregarActividadModalP>
+
+      <ModificarActividadPModal
+        visible2={visible2}
+        onVisible2={onSetVisible2}
+      ></ModificarActividadPModal>
       <Toast ref={toastSuccess} />
       <div
         className="flex justify-between w-full"
@@ -150,6 +161,9 @@ const ProyectoView = () => {
             icon="pi pi-pen-to-square"
             aria-label="Filter"
             severity="primary"
+            onClick={() => {
+              setVisible2(true);
+            }}
           />
           <Button icon="pi pi-trash" aria-label="Filter" severity="danger" />
         </div>
