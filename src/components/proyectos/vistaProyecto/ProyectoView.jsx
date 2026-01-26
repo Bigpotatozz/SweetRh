@@ -17,6 +17,7 @@ import AgregarActividadModalP from "./AgregarActividadModalP";
 import { deactiveReload } from "../../../state/slice/ReloadSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ModificarActividadPModal from "./ModificarActividadModalP";
+import EliminarActividadModalP from "./EliminarActividadModalP";
 const ProyectoView = () => {
   const { id } = useParams();
   const toastSuccess = useRef(null);
@@ -28,6 +29,11 @@ const ProyectoView = () => {
 
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [visible3, setVisible3] = useState(false);
+
+  const onSetVisible3 = () => {
+    setVisible3(false);
+  };
 
   const onSetVisible2 = () => {
     setVisible2(false);
@@ -128,6 +134,11 @@ const ProyectoView = () => {
         visible2={visible2}
         onVisible2={onSetVisible2}
       ></ModificarActividadPModal>
+
+      <EliminarActividadModalP
+        visible3={visible3}
+        onVisible3={onSetVisible3}
+      ></EliminarActividadModalP>
       <Toast ref={toastSuccess} />
       <div
         className="flex justify-between w-full"
@@ -165,7 +176,14 @@ const ProyectoView = () => {
               setVisible2(true);
             }}
           />
-          <Button icon="pi pi-trash" aria-label="Filter" severity="danger" />
+          <Button
+            icon="pi pi-trash"
+            aria-label="Filter"
+            severity="danger"
+            onClick={() => {
+              setVisible3(true);
+            }}
+          />
         </div>
       </div>
 
