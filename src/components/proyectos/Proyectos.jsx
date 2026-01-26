@@ -18,10 +18,6 @@ export const Proyectos = () => {
 
   const exportExcel = () => {};
 
-  const handleReload = () => {
-    dispatch(activeReload());
-  };
-
   const obtenerProyectos = async () => {
     try {
       const response = await axios.get("http://localhost:3000/project/");
@@ -120,7 +116,7 @@ export const Proyectos = () => {
           header="Acciones"
           style={{ minWidth: "200px" }}
           alignFrozen="right"
-          body={(element) => {
+          body={() => {
             return (
               <>
                 <div className="flex align-items-center gap-2">

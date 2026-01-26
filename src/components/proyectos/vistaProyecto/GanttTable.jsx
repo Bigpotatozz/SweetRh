@@ -14,7 +14,6 @@ const GanttTable = ({ actividades }) => {
       type: "",
     }));
 
-    // 2. Actualizamos el estado una sola vez
     setActividadesGantt(nuevasActividades);
   };
 
@@ -30,14 +29,12 @@ const GanttTable = ({ actividades }) => {
     {
       unit: "month",
       step: 1,
-      // Función que recibe la fecha y devuelve el string formateado
       format: (date) =>
         date.toLocaleString("es-MX", { month: "long", year: "numeric" }),
     },
     {
       unit: "day",
       step: 1,
-      // Función para mostrar solo el día numérico
       format: (date) => date.getDate(),
     },
   ];

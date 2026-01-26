@@ -13,7 +13,7 @@ import { createEventModalPlugin } from "@schedule-x/event-modal";
 import axios from "axios";
 import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
-import { activeReload, deactiveReload } from "../../../state/slice/ReloadSlice";
+import { deactiveReload } from "../../../state/slice/ReloadSlice";
 
 export const Calendario = () => {
   const eventsService = useState(() => createEventsServicePlugin())[0];
@@ -23,10 +23,6 @@ export const Calendario = () => {
 
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
-
-  const handleReload = () => {
-    dispatch(activeReload());
-  };
 
   const obtenerEventos = async () => {
     try {
