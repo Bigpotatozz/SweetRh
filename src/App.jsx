@@ -7,6 +7,9 @@ import { Navbar } from "./components/nav/Navbar";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import { Outlet } from "react-router";
 
+//Se importa primeReact para el uso de la libreria
+//Se importa la navbar
+//Se importa donde se renderizaran los distintos componentes
 function App() {
   return (
     <>

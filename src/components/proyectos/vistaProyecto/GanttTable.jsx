@@ -8,7 +8,7 @@ const GanttTable = ({ actividades }) => {
   const formatearActividades = (actividades) => {
     const nuevasActividades = actividades.map((actividad) => ({
       id: actividad.id_project_activity,
-      text: actividad.status,
+      text: actividad.name,
       start: actividad.start_date ? new Date(actividad.start_date) : Date.now(),
       end: actividad.end_date ? new Date(actividad.end_date) : Date.now(),
       type: "",

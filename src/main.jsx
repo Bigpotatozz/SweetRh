@@ -19,6 +19,7 @@ import { store } from "./state/store.js";
 import Empleados from "./components/empleados/Empleados.jsx";
 import ProyectoView from "./components/proyectos/vistaProyecto/ProyectoView.jsx";
 
+//RUTAS DE LA APLICACION
 const router = createBrowserRouter([
   {
     path: "/",
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+//INICIALIZADOR DE LA APP
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={router}></RouterProvider>

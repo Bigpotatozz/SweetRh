@@ -8,29 +8,19 @@ import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { activeReload } from "../../../state/slice/ReloadSlice";
+import actividades from "../../../defaultData/projectActivities";
+import { useParams } from "react-router";
 
 const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
+  const status = ["COMPLETADO", "EN PROCESO", "NO INICIADO", "EN RIESGO"];
+
+  const { id } = useParams();
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
 
-  const [actividadesRapidas, setActividadesRapidas] = useState([
-    {
-      name: "Recepcion de po",
-    },
-    {
-      name: "Elaboracion de contrato",
-    },
+  const [actividadesRapidas, setActividadesRapidas] = useState(actividades);
 
-    {
-      name: "Envio de listado de componentes y cotizacion",
-    },
-
-    {
-      name: "Elaboracion de OC / proveedores",
-    },
-  ]);
-
-  const [actividadRapida, setActividadRapida] = useState({});
+  const [actividadRapida, setActividadRapida] = useState({ name: "" });
   const handleReload = () => {
     dispatch(activeReload());
   };
@@ -46,49 +36,43 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
   };
 
   const [nombreActividad, setNombreActividad] = useState("");
-  const [descripcionActividad, setDescripcionActividad] = useState("");
-  const [fechaInicioActividad, setFechaInicioActividad] = useState("");
-  const [fechaTerminoActividad, setFechaTerminoActividad] = useState("");
-  const [empleado, setEmpleado] = useState(0);
+  const [fechaInicio, setFechaInicio] = useState(null);
+  const [fechaTermino, setFechaTermino] = useState(null);
+  const [estatus, setEstatus] = useState(null);
   const [empleados, setEmpleados] = useState([]);
-
-  const resetInputs = () => {
-    setNombreActividad("");
-    setDescripcionActividad("");
-    setFechaInicioActividad("");
-    setFechaTerminoActividad("");
-    setEmpleado(0);
-  };
+  const [empleado, setEmpleado] = useState(null);
 
   const registrarActividad = async () => {
     const actividad = {
-      id_employee: empleado,
       name: nombreActividad,
-      description: descripcionActividad,
-      start_date:
-        String(fechaInicioActividad.getFullYear()).padStart(4, "0") +
-        "-" +
-        String(fechaInicioActividad.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(fechaInicioActividad.getDate()).padStart(2, "0"),
-      end_date:
-        String(fechaTerminoActividad.getFullYear()).padStart(4, "0") +
-        "-" +
-        String(fechaTerminoActividad.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(fechaTerminoActividad.getDate()).padStart(2, "0"),
+      start_date: fechaInicio
+        ? String(fechaInicio.getFullYear()).padStart(4, "0") +
+          "-" +
+          String(fechaInicio.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(fechaInicio.getDate()).padStart(2, "0")
+        : null,
+      end_date: fechaTermino
+        ? String(fechaTermino.getFullYear()).padStart(4, "0") +
+          "-" +
+          String(fechaTermino.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(fechaTermino.getDate()).padStart(2, "0")
+        : null,
+      id_employee: empleado,
+      status: estatus,
+      id_project: id,
     };
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/activity/create",
+        "http://localhost:3000/projectActivities/create",
         actividad,
       );
 
       showSuccess();
       console.log(response);
       onSetFalseModal();
-      resetInputs();
       handleReload();
     } catch (e) {
       console.log(e);
@@ -123,8 +107,11 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
       >
         <div className="flex gap-2 justify-between m-3">
           <Dropdown
-            value={actividadRapida ? actividadRapida.name : ""}
-            onChange={(e) => setActividadRapida(e.value)}
+            value={actividadRapida}
+            onChange={(e) => {
+              setActividadRapida(e.target.value);
+              setNombreActividad(e.target.value);
+            }}
             options={actividadesRapidas}
             optionValue="name"
             optionLabel="name"
@@ -136,14 +123,12 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
           <label htmlFor="actividad">Nombre de la actividad</label>
           <InputText
             id="actividad"
+            value={nombreActividad}
             aria-describedby="nombre_actividad"
             onChange={(e) => {
               setNombreActividad(e.target.value);
             }}
           />
-          <small id="actividad-help">
-            Introduce el nombre de la actividad a realizar
-          </small>
         </div>
 
         <div className="flex gap-2 justify-between m-3">
@@ -157,12 +142,21 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
             className="w-full"
           />
         </div>
+        <div className="flex gap-2 justify-between m-3">
+          <Dropdown
+            value={estatus}
+            onChange={(e) => setEstatus(e.value)}
+            options={status}
+            placeholder="Estatus de la actividad"
+            className="w-full"
+          />
+        </div>
         <div className="flex gap-2 justify-between">
           <div className="flex flex-column gap-2 m-3 w-100">
             <label htmlFor="fecha_inicio_actividad">Fecha de inicio</label>
             <Calendar
-              value={fechaInicioActividad}
-              onChange={(e) => setFechaInicioActividad(new Date(e.value))}
+              value={fechaInicio}
+              onChange={(e) => setFechaInicio(new Date(e.value))}
               showTime
               hourFormat="24"
             />
@@ -174,8 +168,8 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
           <div className="flex flex-column gap-2 m-3 w-100">
             <label htmlFor="fecha_termino_actividad">Fecha de termino</label>
             <Calendar
-              value={fechaTerminoActividad}
-              onChange={(e) => setFechaTerminoActividad(new Date(e.value))}
+              value={fechaTermino}
+              onChange={(e) => setFechaTermino(new Date(e.value))}
               showTime
               hourFormat="24"
             />
@@ -195,7 +189,7 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
 
           <Button
             label="Cancelar"
-            severity="info"
+            severity="danger"
             className="w-110"
             onClick={onSetFalseModal}
           />

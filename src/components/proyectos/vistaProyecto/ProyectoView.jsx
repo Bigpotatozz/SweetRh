@@ -14,10 +14,14 @@ import { Toast } from "primereact/toast";
 import { ScrollPanel } from "primereact/scrollpanel";
 import GanttTable from "./GanttTable";
 import AgregarActividadModalP from "./AgregarActividadModalP";
+import { deactiveReload } from "../../../state/slice/ReloadSlice";
+import { useDispatch, useSelector } from "react-redux";
 const ProyectoView = () => {
   const { id } = useParams();
   const toastSuccess = useRef(null);
 
+  const reloadReducer = useSelector((state) => state.reload);
+  const dispatch = useDispatch();
   const [contadorAct, setContadorAct] = useState(0);
   const [proyecto, setProyecto] = useState({});
 
@@ -97,6 +101,11 @@ const ProyectoView = () => {
 
     console.log(actividades);
   }, []);
+
+  useEffect(() => {
+    obtenerActividades();
+    dispatch(deactiveReload());
+  }, [reloadReducer]);
 
   useEffect(() => {
     console.log(actividades);

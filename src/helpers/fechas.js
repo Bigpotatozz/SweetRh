@@ -1,3 +1,4 @@
+//Funcion que le da formato a la fecha
 export const parsearFecha = (fecha) => {
   const arraySplitted = fecha.split("T");
 
