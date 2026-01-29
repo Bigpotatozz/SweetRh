@@ -28,13 +28,13 @@ const EliminarActividadModal = ({ visible3, onVisible3 }) => {
     const response = await axios.get(`http://localhost:3000/activity/`);
     console.log(response);
 
-    setActividades(response.data);
+    setActividades(response.data.activities);
   };
 
   const eliminarActividad = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/activity/delete/${actividad}`
+        `http://localhost:3000/activity/delete/${actividad}`,
       );
       console.log(response);
 

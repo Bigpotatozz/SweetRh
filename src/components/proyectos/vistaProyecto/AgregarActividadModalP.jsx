@@ -72,6 +72,8 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
 
       showSuccess();
       console.log(response);
+      setFechaInicio(null);
+      setFechaTermino(null);
       onSetFalseModal();
       handleReload();
     } catch (e) {

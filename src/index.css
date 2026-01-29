@@ -1,2 +1,33 @@
 @import "tailwindcss";
 
+/* Barra principal de la tarea */
+.task-paro-rojo .wx-gantt-task-fill {
+  fill: #ff4757 !important;
+}
+.task-paro-rojo .wx-gantt-task-border {
+  stroke: #ee5a52 !important;
+}
+.task-paro-rojo .wx-gantt-task-text {
+  fill: white !important;
+}
+
+/* Progreso (si usas) */
+.task-paro-rojo .wx-gantt-task-progress-fill {
+  fill: #ff6b6b;
+}
+
+/* Verde */
+.task-ok-verde .wx-gantt-task-fill {
+  fill: #00ba94 !important;
+}
+.task-ok-verde .wx-gantt-task-border {
+  stroke: #099f81 !important;
+}
+
+/* Amarillo */
+.task-mantenimiento-amarillo .wx-gantt-task-fill {
+  fill: #ffa502 !important;
+}
+.task-mantenimiento-amarillo .wx-gantt-task-border {
+  stroke: #ff9800 !important;
+}

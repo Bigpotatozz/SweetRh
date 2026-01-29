@@ -11,7 +11,7 @@ const GanttTable = ({ actividades }) => {
       text: actividad.name,
       start: actividad.start_date ? new Date(actividad.start_date) : Date.now(),
       end: actividad.end_date ? new Date(actividad.end_date) : Date.now(),
-      type: "",
+      css: "task-paro-rojo",
     }));
 
     setActividadesGantt(nuevasActividades);
@@ -42,12 +42,24 @@ const GanttTable = ({ actividades }) => {
   return (
     <>
       <div className="w-full">
+        <aside>
+          <ul>
+            {actividadesGantt.map((actividad) => {
+              return (
+                <li key={actividad.id_project_activity}>
+                  <p>{actividad.name}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
         <Willow>
           <Gantt
             tasks={actividadesGantt}
             links={links}
             scales={scales}
             readonly={true}
+            custom
           ></Gantt>
         </Willow>
       </div>

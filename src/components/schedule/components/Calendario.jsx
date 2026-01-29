@@ -35,41 +35,38 @@ export const Calendario = () => {
       const events = [];
 
       response.data.forEach((evento) => {
-        if (evento.end_date === null || evento.start_date === undefined) {
+        if (!evento.start_date) {
+          console.log(`⏭️ Saltado: ${evento.name} (sin start_date)`);
           return;
         }
+
         events.push({
           id: evento.id_activity,
           title: `${evento.name_employee} ${evento.name}`,
           start: Temporal.Instant.from(evento.start_date)
             .toZonedDateTimeISO("UTC")
             .toPlainDate(),
-          end: Temporal.Instant.from(evento.end_date)
+          end: Temporal.Instant.from(evento.end_date || evento.start_date)
             .toZonedDateTimeISO("UTC")
             .toPlainDate(),
           calendarId: evento.id_employee,
-          description: evento.description
-            ? evento.description
-            : "Sin descripcion",
+          description: evento.description || "Sin descripcion",
         });
       });
 
       setEventos(events);
-
       eventsService.set(events);
     } catch (e) {
       console.log(e);
     }
   };
-
   useEffect(() => {
     obtenerEventos();
-    dispatch(deactiveReload());
-  }, [reloadReducer]);
 
-  useEffect(() => {
-    obtenerEventos();
-  }, []);
+    if (reloadReducer.active) {
+      dispatch(deactiveReload());
+    }
+  }, [reloadReducer.active]);
 
   const calendar = useCalendarApp({
     calendars: {

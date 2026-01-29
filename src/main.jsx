@@ -13,7 +13,6 @@ import { Schedule } from "./components/schedule/Schedule.jsx";
 import { Proyectos } from "./components/proyectos/Proyectos.jsx";
 import { Raidd } from "./components/raidd/Raidd.jsx";
 import { Contratos } from "./components/contratos/Contratos.jsx";
-import VistaGeneralActividades from "./components/actividades/vistaGeneral/VistaGeneralActividades.jsx";
 import { Provider } from "react-redux";
 import { store } from "./state/store.js";
 import Empleados from "./components/empleados/Empleados.jsx";
@@ -28,11 +27,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Schedule></Schedule>,
-      },
-
-      {
-        path: "/actividades",
-        element: <VistaGeneralActividades></VistaGeneralActividades>,
       },
 
       {
