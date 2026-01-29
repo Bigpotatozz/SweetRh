@@ -109,21 +109,37 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
         }}
       >
         <h2 className="font-bold">Información del contrato</h2>
+
+        <div className="flex flex-column gap-2 m-3">
+          <label htmlFor="estatus">Estatus:</label>
+          <Dropdown
+            value={contract.status}
+            onChange={(e) => {
+              const object = { ...contract };
+              object.status = e.value;
+              setContract(object);
+            }}
+            options={estatus}
+            optionLabel="name"
+            placeholder="Estatus"
+            className="w-full"
+          />
+        </div>
         <div className="flex w-full justify-center gap-3">
           <div className="flex align-items-center mt-3">
             <Checkbox
-              inputId="facturado"
-              name="facturado"
-              value={contract.facturado}
+              inputId="po"
+              name="po"
+              value={contract.po}
               onChange={() => {
                 const object = { ...contract };
-                object.facturado = !object.facturado;
+                object.po = !object.po;
                 setContract(object);
               }}
-              checked={contract.facturado}
+              checked={contract.po}
             />
             <label htmlFor="facturado" className="ml-1">
-              Facturado
+              PO
             </label>
           </div>
 
@@ -143,21 +159,20 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
               En almacen
             </label>
           </div>
-
           <div className="flex align-items-center mt-3">
             <Checkbox
-              inputId="po"
-              name="po"
-              value={contract.po}
+              inputId="facturado"
+              name="facturado"
+              value={contract.facturado}
               onChange={() => {
                 const object = { ...contract };
-                object.po = !object.po;
+                object.facturado = !object.facturado;
                 setContract(object);
               }}
-              checked={contract.po}
+              checked={contract.facturado}
             />
             <label htmlFor="facturado" className="ml-1">
-              PO
+              Facturado
             </label>
           </div>
 
@@ -207,22 +222,6 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
                 setContract(object);
               }}
               hourFormat="24"
-            />
-          </div>
-
-          <div className="flex flex-column gap-2 m-3">
-            <label htmlFor="estatus">Estatus:</label>
-            <Dropdown
-              value={contract.status}
-              onChange={(e) => {
-                const object = { ...contract };
-                object.status = e.value;
-                setContract(object);
-              }}
-              options={estatus}
-              optionLabel="name"
-              placeholder="Actividad"
-              className="w-full"
             />
           </div>
         </div>
