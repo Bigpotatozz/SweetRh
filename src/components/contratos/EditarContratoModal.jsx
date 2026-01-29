@@ -32,7 +32,7 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
     try {
       const response = await axios.patch(
         `http://localhost:3000/contract/update/${idContrato}`,
-        contract
+        contract,
       );
 
       console.log(response);
@@ -48,7 +48,7 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
   const obtenerContrato = async (idContrato) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/contract/${idContrato}`
+        `http://localhost:3000/contract/${idContrato}`,
       );
       setContract(response.data);
       console.log(response.data);
@@ -84,18 +84,18 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
         <div className="flex w-full justify-center gap-3">
           <div className="flex align-items-center mt-3">
             <Checkbox
-              inputId="facturado"
-              name="facturado"
-              value={contract.facturado}
+              inputId="po"
+              name="po"
+              value={contract.po}
               onChange={() => {
                 const object = { ...contract };
-                object.facturado = !object.facturado;
+                object.po = !object.po;
                 setContract(object);
               }}
-              checked={contract.facturado}
+              checked={contract.po}
             />
             <label htmlFor="facturado" className="ml-1">
-              Facturado
+              PO
             </label>
           </div>
 
@@ -118,18 +118,18 @@ const EditarContratoModal = ({ visible2, onVisible2, idContrato }) => {
 
           <div className="flex align-items-center mt-3">
             <Checkbox
-              inputId="po"
-              name="po"
-              value={contract.po}
+              inputId="facturado"
+              name="facturado"
+              value={contract.facturado}
               onChange={() => {
                 const object = { ...contract };
-                object.po = !object.po;
+                object.facturado = !object.facturado;
                 setContract(object);
               }}
-              checked={contract.po}
+              checked={contract.facturado}
             />
             <label htmlFor="facturado" className="ml-1">
-              PO
+              Facturado
             </label>
           </div>
 
