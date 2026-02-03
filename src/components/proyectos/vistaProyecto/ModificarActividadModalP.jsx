@@ -6,7 +6,6 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { parsearFecha } from "../../../helpers/fechas";
 import { useDispatch, useSelector } from "react-redux";
 import { activeReload, deactiveReload } from "../../../state/slice/ReloadSlice";
 import { useParams } from "react-router";
@@ -72,7 +71,6 @@ const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
       );
 
       showSuccess();
-      console.log("AQUIIIIIIIIIIIII");
       console.log(response);
       onVisible2();
 
