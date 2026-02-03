@@ -78,6 +78,11 @@ export const Raidd = () => {
           onClick={() => setVisible2(true)}
         />
         <Button
+          label="Editar RAIDD"
+          severity="warning"
+          onClick={() => setVisible(true)}
+        />
+        <Button
           label="Agregar accion"
           severity="info"
           onClick={() => setVisible2(true)}
@@ -111,6 +116,11 @@ export const Raidd = () => {
         size="small"
         stripedRows
         showGridlines
+        onRowClick={(e) => {
+          alert("Clickeado");
+        }}
+        rowClassName={() => "cursor-pointer"}
+        selectionMode={"single"}
       >
         <Column
           field="id_raidd"
@@ -177,23 +187,6 @@ export const Raidd = () => {
           header="INICIO"
           style={{ minWidth: "150px" }}
           sortable
-        />
-
-        <Column
-          header="Acciones"
-          style={{ minWidth: "100px" }}
-          body={(element) => (
-            <div className="flex align-items-center gap-2">
-              <i
-                className="pi pi-pen-to-square cursor-pointer"
-                style={{ color: "blue", fontSize: "1.2rem" }}
-                onClick={() => {
-                  setIdRaidd(element.id);
-                  setVisible(true);
-                }}
-              ></i>
-            </div>
-          )}
         />
       </DataTable>
     </div>
