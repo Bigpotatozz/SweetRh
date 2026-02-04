@@ -14,21 +14,15 @@ const EditarRaiddModal = ({ visible2, onVisible2, idRaidd }) => {
   const dispatch = useDispatch();
   const toastSuccess = useRef(null);
 
+  const [contratos, setContratos] = useState([]);
+  const [contrato, setContrato] = useState(0);
   const [raidd, setRaidd] = useState({
-    contrato: "",
-    proyecto: "",
-    responsable: "",
     cota: "",
-    pq: "",
-    cliente: "",
     usuario: "",
-    tiempoEntrega: null,
+    tiempo_entrega: "",
     duracion: "",
-    inicio: null,
-    raiddType: "",
-    responsableRaidd: "",
-    fechaCompromiso: null,
-    comentarios: "",
+    inicio: "",
+    id_contract: 0,
   });
 
   const showSuccess = () => {
@@ -85,67 +79,67 @@ const EditarRaiddModal = ({ visible2, onVisible2, idRaidd }) => {
           onVisible2();
         }}
       >
-        <div className="grid p-fluid">
-          <div className="col-12 md:col-6 field">
-            <label htmlFor="contrato">Contrato</label>
+        <div className="flex gap-2 justify-between m-3">
+          <Dropdown
+            value={contrato}
+            onChange={(e) => setContrato(e.value)}
+            options={contratos}
+            optionValue="id_contract"
+            optionLabel="contract_number"
+            placeholder="Contrato"
+            className="w-full"
+          />
+        </div>
+
+        <div className="flex ">
+          <div className="flex flex-column gap-2 m-3 w-full">
             <InputText
-              id="contrato"
-              value={raidd.contrato}
-              onChange={(e) => setRaidd({ ...raidd, contrato: e.target.value })}
-            />
-          </div>
-          <div className="col-12 md:col-6 field">
-            <label htmlFor="proyecto">Proyecto</label>
-            <InputText
-              id="proyecto"
-              value={raidd.proyecto}
-              onChange={(e) => setRaidd({ ...raidd, proyecto: e.target.value })}
-            />
-          </div>
-          <div className="col-12 md:col-6 field">
-            <label htmlFor="responsable">Responsable</label>
-            <InputText
-              id="responsable"
-              value={raidd.responsable}
-              onChange={(e) =>
-                setRaidd({ ...raidd, responsable: e.target.value })
-              }
-            />
-          </div>
-          <div className="col-12 md:col-6 field">
-            <label htmlFor="cota">Cota</label>
-            <InputText
+              placeholder="Cota"
               id="cota"
               value={raidd.cota}
               onChange={(e) => setRaidd({ ...raidd, cota: e.target.value })}
             />
           </div>
-          <div className="col-12 md:col-6 field">
-            <label htmlFor="pq">PQ</label>
+          <div className="flex flex-column gap-2 m-3 w-full">
             <InputText
-              id="pq"
-              value={raidd.pq}
-              onChange={(e) => setRaidd({ ...raidd, pq: e.target.value })}
+              placeholder="Usuario"
+              id="usuario"
+              value={raidd.usuario}
+              onChange={(e) => setRaidd({ ...raidd, usuario: e.target.value })}
             />
           </div>
-          <div className="col-12 md:col-6 field">
-            <label htmlFor="cliente">Cliente</label>
+        </div>
+
+        <div className="flex gap-1">
+          <div className="flex flex-column gap-2 m-3 w-full">
             <InputText
-              id="cliente"
-              value={raidd.cliente}
-              onChange={(e) => setRaidd({ ...raidd, cliente: e.target.value })}
-            />
-          </div>
-          <div className="col-12 field">
-            <label htmlFor="comentarios">Comentarios</label>
-            <InputText
-              id="comentarios"
-              value={raidd.comentarios}
+              placeholder="Tiempo de Entrega"
+              id="tiempo_entrega"
+              value={raidd.tiempo_entrega}
               onChange={(e) =>
-                setRaidd({ ...raidd, comentarios: e.target.value })
+                setRaidd({ ...raidd, tiempo_entrega: e.target.value })
               }
             />
           </div>
+          <div className="flex flex-column gap-2 m-3 w-full">
+            <InputText
+              placeholder="Duracion"
+              id="duracion"
+              value={raidd.duracion}
+              onChange={(e) => setRaidd({ ...raidd, duracion: e.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-column gap-2 m-3 w-160">
+          <label htmlFor="fecha_termino_actividad">Fecha de inicio</label>
+          <Calendar
+            value={raidd.inicio}
+            onChange={(e) => {
+              setRaidd({ ...raidd, inicio: e.value });
+            }}
+            dateFormat="dd-mm-yy"
+          />
         </div>
 
         <div className="flex gap-4 justify-center mt-4">

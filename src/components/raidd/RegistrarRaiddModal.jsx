@@ -57,10 +57,18 @@ const RegistrarRaiddModal = ({ visible2, onVisible2 }) => {
   const registrarInformacion = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/raidd/create",
-        raidd,
+        "http://localhost:3000/raidd/createRaidd",
+        {
+          cota: raidd.cota,
+          usuario: raidd.usuario,
+          tiempo_entrega: raidd.tiempo_entrega,
+          duracion: raidd.duracion,
+          inicio: raidd.inicio.toISOString().split("T")[0],
+          id_contract: raidd.id_contract,
+        },
       );
 
+      console.log(response);
       console.log("Registrando RAIDD:", raidd);
       onVisible2();
       showSuccess();
@@ -149,13 +157,17 @@ const RegistrarRaiddModal = ({ visible2, onVisible2 }) => {
           <Calendar
             value={raidd.inicio}
             onChange={(e) => setRaidd({ ...raidd, inicio: e.value })}
-            showTime
-            hourFormat="24"
           />
         </div>
 
         <div className="flex gap-4 justify-center mt-4">
-          <Button label="Registrar" severity="success" />
+          <Button
+            label="Registrar"
+            severity="success"
+            onClick={() => {
+              registrarInformacion();
+            }}
+          />
           <Button label="Cancelar" severity="secondary" onClick={onVisible2} />
         </div>
       </Dialog>
