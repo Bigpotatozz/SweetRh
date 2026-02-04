@@ -82,11 +82,6 @@ export const Raidd = () => {
           severity="warning"
           onClick={() => setVisible(true)}
         />
-        <Button
-          label="Agregar accion"
-          severity="info"
-          onClick={() => setVisible2(true)}
-        />
 
         <Button
           label="Exportar"
