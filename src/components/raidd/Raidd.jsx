@@ -10,39 +10,107 @@ import * as XLSX from "xlsx";
 import { activeReload, deactiveReload } from "../../state/slice/ReloadSlice";
 import RegistrarRaiddModal from "./RegistrarRaiddModal";
 import EditarRaiddModal from "./EditarRaiddModal";
+import ActividadesRaiddModal from "./ActividadesRaiddModal";
 
 export const Raidd = () => {
   const [raiddItems, setRaiddItems] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [visible3, setVisible3] = useState(false);
   const [idRaidd, setIdRaidd] = useState(0);
   const reloadReducer = useSelector((state) => state.reload);
   const dispatch = useDispatch();
   const [valueBuscador, setValueBuscador] = useState("");
 
-  const exportExcel = () => {
-    const datosFormateados = raiddItems.map((item) => ({
-      "#": item.id,
-      Contrato: item.contrato,
-      Proyecto: item.proyecto,
-      Responsable: item.responsable,
-      Cota: item.cota,
-      PQ: item.pq,
-      Cliente: item.cliente,
-      Usuario: item.usuario,
-      "Tiempo de Entrega": item.tiempoEntrega,
-      Duracion: item.duracion,
-      Inicio: item.inicio,
-      RAIDD: item.raiddType,
-      "Responsable RAIDD": item.responsableRaidd,
-      "Fecha Compromiso": item.fechaCompromiso,
-      Comentarios: item.comentarios,
-    }));
+  const [raiddSelected, setRaiddSelected] = useState(0);
 
-    const worksheet = XLSX.utils.json_to_sheet(datosFormateados);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "RAIDD");
-    XLSX.writeFile(workbook, `RAIDD.xlsx`);
+  const exportExcel = () => {
+    const headers = [
+      "#",
+      "CONTRATO",
+      "PROYECTO",
+      "RESPONSABLE",
+      "COTA",
+      "PO",
+      "CLIENTE",
+      "USUARIO",
+      "TIEMPO DE ENTREGA",
+      "DURACION",
+      "INICIO",
+      "PQ",
+      "TIPO RAIDD",
+      "RESPONSABLE RAIDD",
+      "FECHA COMPROMISO",
+      "COMENTARIOS",
+    ];
+
+    let tableHtml = `
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <style>
+            .header {
+              background-color: #1D6F42;
+              color: white;
+              font-weight: bold;
+              text-align: center;
+              border: 1px solid #000;
+            }
+            td {
+              border: 1px solid #000;
+              text-align: left;
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            <thead>
+              <tr>
+                ${headers.map((h) => `<th class="header">${h}</th>`).join("")}
+              </tr>
+            </thead>
+            <tbody>
+              ${raiddItems
+                .map(
+                  (item) => `
+                <tr>
+                  <td>${item.id_raidd || ""}</td>
+                  <td>${item.contract_number || ""}</td>
+                  <td>${item.contract_number || ""}</td>
+                  <td>${item.employee_name || ""}</td>
+                  <td>${item.cota || ""}</td>
+                  <td>${item.customer_po || ""}</td>
+                  <td>${item.client || ""}</td>
+                  <td>${item.usuario || ""}</td>
+                  <td>${item.tiempo_entrega || ""}</td>
+                  <td>${item.duracion || ""}</td>
+                  <td>${item.inicio || ""}</td>
+                  <td>${item.pq || ""}</td>
+                  <td>${item.raiddType || ""}</td>
+                  <td>${item.responsableRaidd || ""}</td>
+                  <td>${item.fechaCompromiso || ""}</td>
+                  <td>${item.comentarios || ""}</td>
+                </tr>
+              `,
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+
+    const blob = new Blob(["\ufeff", tableHtml], {
+      type: "application/vnd.ms-excel",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "RAIDD_Listado.xls";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const obtenerRaiddItems = async () => {
@@ -56,6 +124,7 @@ export const Raidd = () => {
 
   const onVisible = () => setVisible(false);
   const onVisible2 = () => setVisible2(false);
+  const onVisible3 = () => setVisible3(false);
 
   useEffect(() => {
     obtenerRaiddItems();
@@ -71,6 +140,11 @@ export const Raidd = () => {
         idRaidd={idRaidd}
       />
 
+      <ActividadesRaiddModal
+        visible2={visible3}
+        onVisible2={onVisible3}
+        idRaidd={idRaidd}
+      ></ActividadesRaiddModal>
       <div className="flex justify-between gap-2">
         <Button
           label="Nuevo RAIDD"
@@ -112,7 +186,8 @@ export const Raidd = () => {
         stripedRows
         showGridlines
         onRowClick={(e) => {
-          alert("Clickeado");
+          setIdRaidd(e.data.id_raidd);
+          setVisible3(true);
         }}
         rowClassName={() => "cursor-pointer"}
         selectionMode={"single"}
