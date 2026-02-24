@@ -86,7 +86,7 @@ export const Proyectos = () => {
           sortable
         ></Column>
         <Column
-          header="Empleados"
+          header="Responsables"
           body={(rowData) => {
             return (
               <span>
