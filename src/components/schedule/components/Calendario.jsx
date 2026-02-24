@@ -42,7 +42,7 @@ export const Calendario = () => {
 
         events.push({
           id: evento.id_activity,
-          title: `${evento.name_employee} - ${evento.project_name} - ${evento.name}`,
+          title: `${evento.name_employee} - ${evento.project_name ? evento.project_name : "ACTIVIDAD"} - ${evento.name}`,
           start: Temporal.Instant.from(evento.start_date)
             .toZonedDateTimeISO("UTC")
             .toPlainDate(),

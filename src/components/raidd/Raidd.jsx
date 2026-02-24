@@ -116,9 +116,15 @@ export const Raidd = () => {
   const obtenerRaiddItems = async () => {
     try {
       const response = await axios.get("http://localhost:3000/raidd/");
-      setRaiddItems(response.data);
+      if (Array.isArray(response.data)) {
+        setRaiddItems(response.data);
+      } else {
+        console.warn("API response is not an array:", response.data);
+        setRaiddItems([]);
+      }
     } catch (e) {
-      console.log(e);
+      console.error("Error fetching raidd items:", e);
+      setRaiddItems([]);
     }
   };
 
@@ -177,7 +183,7 @@ export const Raidd = () => {
       </div>
 
       <DataTable
-        value={raiddItems}
+        value={Array.isArray(raiddItems) ? raiddItems : []}
         scrollable
         scrollHeight="700px"
         className="mt-4"

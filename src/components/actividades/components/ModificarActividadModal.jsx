@@ -201,6 +201,7 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
               onChange={(e) => setFechaInicioActividad(new Date(e.value))}
               showTime
               hourFormat="24"
+              hideOnDateTimeSelect
             />
             <small id="fecha_inicio-help">
               Introduce la fecha de inicio de la actividad
@@ -214,6 +215,7 @@ const ModificarActividadModal = ({ visible2, onVisible2 }) => {
               onChange={(e) => setFechaTerminoActividad(new Date(e.value))}
               showTime
               hourFormat="24"
+              hideOnDateTimeSelect
             />
             <small id="fecha_termino-help">
               Introduce la fecha de termino de la actividad

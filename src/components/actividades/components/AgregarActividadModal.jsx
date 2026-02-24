@@ -64,7 +64,7 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/activity/create",
-        actividad
+        actividad,
       );
 
       showSuccess();
@@ -151,6 +151,7 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
               onChange={(e) => setFechaInicioActividad(new Date(e.value))}
               showTime
               hourFormat="24"
+              hideOnDateTimeSelect
             />
             <small id="fecha_inicio-help">
               Introduce la fecha de inicio de la actividad
@@ -164,6 +165,7 @@ const AgregarActividadModal = ({ visible, onSetFalseModal }) => {
               onChange={(e) => setFechaTerminoActividad(new Date(e.value))}
               showTime
               hourFormat="24"
+              hideOnDateTimeSelect
             />
             <small id="fecha_termino-help">
               Introduce la fecha de termino de la actividad
