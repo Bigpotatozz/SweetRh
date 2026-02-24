@@ -21,12 +21,15 @@ export const Proyectos = () => {
       const response = await axios.get("http://localhost:3000/project/");
       console.log(response.data);
 
-      if (response.data.status === 404) {
-        return;
+      if (Array.isArray(response.data)) {
+        setProyectos(response.data);
+      } else {
+        console.warn("API response is not an array:", response.data);
+        setProyectos([]);
       }
-      setProyectos(response.data);
     } catch (e) {
-      console.log(e);
+      console.error("Error fetching projects:", e);
+      setProyectos([]);
     }
   };
 
@@ -55,7 +58,7 @@ export const Proyectos = () => {
       </div>
 
       <DataTable
-        value={proyectos}
+        value={Array.isArray(proyectos) ? proyectos : []}
         scrollable
         scrollHeight="700px"
         className="mt-4  w-full "

@@ -22,6 +22,8 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
   const [empleados, setEmpleados] = useState([]);
   const [empleado, setEmpleado] = useState({});
 
+  const [empleado2, setEmpleado2] = useState({});
+
   const estatus = ["ENTREGADO", "NO ENTREGADO", "EN PROCESO"];
 
   const showSuccess = () => {
@@ -66,7 +68,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
           status: contract.status,
           name_proy: project.name,
           description: project.description,
-          id_employee: empleado,
+          employees: [empleado, empleado2],
         },
       );
 
@@ -371,6 +373,17 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
           />
         </div>
 
+        <div className="flex gap-2 justify-between m-3">
+          <Dropdown
+            value={empleado2}
+            onChange={(e) => setEmpleado2(e.value)}
+            options={empleados}
+            optionValue="id_employee"
+            optionLabel="name"
+            placeholder="Responsable"
+            className="w-full"
+          />
+        </div>
         <div className="flex gap-5 justify-center m-3">
           <Button
             label="Registrar"

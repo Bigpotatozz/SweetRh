@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 
 import { Button } from "primereact/button";
@@ -6,6 +7,7 @@ import { Column } from "primereact/column";
 import { Navbar } from "./components/nav/Navbar";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import { Outlet } from "react-router";
+import { io } from "socket.io-client";
 
 //Se importa primeReact para el uso de la libreria
 //Se importa la navbar
