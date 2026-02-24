@@ -86,9 +86,17 @@ export const Proyectos = () => {
           sortable
         ></Column>
         <Column
-          field="employee.name"
-          header="Responsable"
-          style={{ minWidth: "100px" }}
+          header="Empleados"
+          body={(rowData) => {
+            return (
+              <span>
+                {rowData.employees && rowData.employees.length > 0
+                  ? rowData.employees.map((emp) => emp.name).join(", ")
+                  : "Sin empleados"}
+              </span>
+            );
+          }}
+          style={{ minWidth: "150px" }}
           sortable
         ></Column>
         <Column
