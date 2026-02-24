@@ -159,8 +159,7 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
             <Calendar
               value={fechaInicio}
               onChange={(e) => setFechaInicio(new Date(e.value))}
-              showTime
-              hourFormat="24"
+              hideOnDateTimeSelect
             />
             <small id="fecha_inicio-help">
               Introduce la fecha de inicio de la actividad
@@ -172,8 +171,7 @@ const AgregarActividadModalP = ({ visible, onSetFalseModal }) => {
             <Calendar
               value={fechaTermino}
               onChange={(e) => setFechaTermino(new Date(e.value))}
-              showTime
-              hourFormat="24"
+              hideOnDateTimeSelect
             />
             <small id="fecha_termino-help">
               Introduce la fecha de termino de la actividad

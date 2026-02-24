@@ -203,8 +203,7 @@ const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
             <Calendar
               value={fechaInicioActividad}
               onChange={(e) => setFechaInicioActividad(new Date(e.value))}
-              showTime
-              hourFormat="24"
+              hideOnDateTimeSelect
             />
           </div>
 
@@ -213,8 +212,7 @@ const ModificarActividadPModal = ({ visible2, onVisible2 }) => {
             <Calendar
               value={fechaTerminoActividad}
               onChange={(e) => setFechaTerminoActividad(new Date(e.value))}
-              showTime
-              hourFormat="24"
+              hideOnDateTimeSelect
             />
           </div>
         </div>

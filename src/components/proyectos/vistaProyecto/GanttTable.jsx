@@ -6,13 +6,30 @@ const GanttTable = ({ actividades }) => {
   const [actividadesGantt, setActividadesGantt] = useState([]);
 
   const formatearActividades = (actividades) => {
-    const nuevasActividades = actividades.map((actividad) => ({
-      id: actividad.id_project_activity,
-      text: actividad.name,
-      start: actividad.start_date ? new Date(actividad.start_date) : Date.now(),
-      end: actividad.end_date ? new Date(actividad.end_date) : Date.now(),
-      css: "task-paro-rojo",
-    }));
+    const nuevasActividades = actividades.map((actividad) => {
+      const start = actividad.start_date
+        ? new Date(actividad.start_date)
+        : new Date();
+      start.setHours(0, 0, 0, 0);
+
+      let end = actividad.end_date
+        ? new Date(actividad.end_date)
+        : new Date(start);
+      end.setHours(0, 0, 0, 0);
+
+      // If end is not after start (same day or invalid), make it next day for visibility
+      if (end.getTime() <= start.getTime()) {
+        end.setDate(start.getDate() + 1);
+      }
+
+      return {
+        id: actividad.id_project_activity,
+        text: actividad.name,
+        start: start,
+        end: end,
+        css: "task-paro-rojo",
+      };
+    });
 
     setActividadesGantt(nuevasActividades);
   };
