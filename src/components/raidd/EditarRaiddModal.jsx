@@ -137,7 +137,7 @@ const EditarRaiddModal = ({ visible2, onVisible2 }) => {
             }}
             options={registros}
             optionValue="id_raidd"
-            optionLabel="id_raidd"
+            optionLabel="cota"
             placeholder="Raidd a modificar"
             className="w-full"
           />

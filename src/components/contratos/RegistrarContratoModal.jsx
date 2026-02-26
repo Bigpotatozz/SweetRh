@@ -20,9 +20,9 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
 
   const [project, setProject] = useState({});
   const [empleados, setEmpleados] = useState([]);
-  const [empleado, setEmpleado] = useState({});
+  const [empleado, setEmpleado] = useState();
 
-  const [empleado2, setEmpleado2] = useState({});
+  const [empleado2, setEmpleado2] = useState();
 
   const estatus = ["ENTREGADO", "NO ENTREGADO", "EN PROCESO"];
 
@@ -37,6 +37,8 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
   const limpiarCampos = () => {
     setContract({});
     setProject({});
+    setEmpleado({});
+    setEmpleado2({});
   };
   const obtenerEmpleados = async () => {
     try {
@@ -49,6 +51,15 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
 
   const registrarInformacion = async () => {
     try {
+      const empleadosReq = [];
+
+      if (empleado != undefined) {
+        empleadosReq.push(empleado);
+      }
+
+      if (empleado2 != undefined) {
+        empleadosReq.push(empleado2);
+      }
       const contrato = await axios.post(
         "http://localhost:3000/contract/create/contractProject",
         {
@@ -68,7 +79,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
           status: contract.status,
           name_proy: project.name,
           description: project.description,
-          employees: [empleado, empleado2],
+          employees: empleadosReq,
         },
       );
 
@@ -390,6 +401,7 @@ const RegistrarContratoModal = ({ visible2, onVisible2, nextContractName }) => {
             severity="success"
             className="w-110"
             onClick={() => {
+              console.log(empleado, empleado2);
               registrarInformacion();
             }}
           />
